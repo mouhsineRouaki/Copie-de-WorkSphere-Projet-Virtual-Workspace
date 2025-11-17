@@ -1,0 +1,21 @@
+# --- Node Modules (ne jamais versionner) ---
+node_modules/
+
+
+# Tailwind CLI standalone (très gros fichier)
+tailwindcss.exe
+
+# Fichiers temporaires ou compilés
+dist/
+build/
+
+# --- Si tu utilises Vite ou autre outils ---
+*.log
+*.tmp
+
+# --- Fichiers système ---
+.DS_Store
+Thumbs.db
+
+# --- VS Code ---
+.vscode/

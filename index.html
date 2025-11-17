@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/output.css">
+    <title>Virtual Workspace</title>
+</head>
+
+<body class="min-h-screen bg-state-950 text-state-100 text-white">
+    <div class="min-h-screen flex">
+        <aside class="w-40  bg-gradient-to-br from-[#BA8970] to-[#D3C0B5]  backdrop-blur-3xl">
+            <div class="header border-b flex flex-row justify-between  px-1.5 py-1.5">
+                <div>
+                    <h1 class="text-lg font-semibold tracking-tight w-[]">WorkSphere</h1>
+                    <p class="text-xs  font-semibold">Gestion visuelle du personnel</p>
+                </div>
+                <img src="./assets/logoWorkspace.jpg" alt="logo Workspace" class="rounded-full h-10 w-10">
+            </div>
+            <div class="h-14  flex w-full justify-center items-center gap-2 border-b ">
+                <button class="rounded-full px-3 bg-amber-600 shadow-2xl">add Worker</button>
+                <button class="rounded-full px-3 bg-amber-600">auto reper</button>
+            </div>
+            <div class="px-4 py-3 border-b space-y-2">
+                <div class="relative">
+                    <input type="text" placeholder="Rechercher par nom ou rôle…"
+                        class="w-full rounded-xl bg-slate-900/80 border border-slate-700 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                    <span class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 text-xs">🔍</span>
+                </div>
+            </div>
+            <div class=" flex justify-around px-4 py-3 border-b ">
+                <div id="tous" class="rounded-full bg-amber-700 w-14 text-center">Tous</div>
+                <div id="tous" class="rounded-full bg-amber-700 w-14 text-center">Tous</div>
+                <div id="tous" class="rounded-full bg-amber-700 w-14 text-center">Tous</div>
+                <div id="tous" class="rounded-full bg-amber-700 w-14 text-center">Tous</div>
+            </div>
+            <div class="contaier-worker">
+                <!-- ici les cards workers -->
+            </div>
+
+        </aside>
+        <main class="bg-gradient-to-br to-[#BA8970] w-full from-[#D3C0B5]">
+            <header class="border-b">
+                <h1 class="text-lg font-semibold tracking-tight">Plan d’étage & zones</h1>
+                <p class="text-xs  font-semibold"></p>
+            </header>
+            <section class="relative w-full self-start">
+                    <img src="./assets/plan.jpg" alt="plan d'etrage"
+                        class="w-full max-h-screen h-auto block">
+
+                    <div class="absolute top-0 left-0 w-full h-full grid 
+                        grid-cols-[38%_17%_22%_22%] 
+                        grid-rows-[33.5%_32%_32.5%]">
+
+                        <div aria-label="Salle à Manger"
+                            class="col-start-1 row-start-1 
+                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
+                        </div>
+
+                        <div aria-label="Salon"
+                            class="col-start-1 row-start-2 row-span-2 
+                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
+                        </div>
+                        <div aria-label="Bureau 1"
+                            class="col-start-3 row-start-1 
+                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
+                        </div>
+                        <div aria-label="Bureau 2"
+                            class="col-start-4 row-start-1 
+                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
+                        </div>
+
+                        <div aria-label="Salle 8"
+                            class="col-start-3 row-start-3 
+                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
+                        </div>
+
+                        <div aria-label="Salle 9"
+                            class="col-start-4 row-start-3 
+                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
