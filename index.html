@@ -1,92 +1,236 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/output.css">
-    <title>Virtual Workspace</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WorkSphere - Gestion visuelle du personnel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="min-h-screen bg-state-950 text-state-100 text-white">
-    <div class="min-h-screen flex">
-        <aside class="w-40  bg-gradient-to-br from-[#BA8970] to-[#D3C0B5]  backdrop-blur-3xl">
-            <div class="header border-b flex flex-row justify-between  px-1.5 py-1.5">
-                <div>
-                    <h1 class="text-lg font-semibold tracking-tight w-[]">WorkSphere</h1>
-                    <p class="text-xs  font-semibold">Gestion visuelle du personnel</p>
-                </div>
-                <img src="./assets/logoWorkspace.jpg" alt="logo Workspace" class="rounded-full h-10 w-10">
-            </div>
-            <div class="h-14  flex w-full justify-center items-center gap-2 border-b ">
-                <button class="rounded-full px-3 bg-amber-600 shadow-2xl">add Worker</button>
-                <button class="rounded-full px-3 bg-amber-600">auto reper</button>
-            </div>
-            <div class="px-4 py-3 border-b space-y-2">
-                <div class="relative">
-                    <input type="text" placeholder="Rechercher par nom ou rôle…"
-                        class="w-full rounded-xl bg-slate-900/80 border border-slate-700 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500" />
-                    <span class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 text-xs">🔍</span>
-                </div>
-            </div>
-            <div class=" flex justify-around px-4 py-3 border-b ">
-                <div id="tous" class="rounded-full bg-amber-700 w-14 text-center">Tous</div>
-                <div id="tous" class="rounded-full bg-amber-700 w-14 text-center">Tous</div>
-                <div id="tous" class="rounded-full bg-amber-700 w-14 text-center">Tous</div>
-                <div id="tous" class="rounded-full bg-amber-700 w-14 text-center">Tous</div>
-            </div>
-            <div class="contaier-worker">
-                <!-- ici les cards workers -->
-            </div>
+<body class="min-h-screen bg-slate-950 text-slate-100">
 
-        </aside>
-        <main class="bg-gradient-to-br to-[#BA8970] w-full from-[#D3C0B5]">
-            <header class="border-b">
-                <h1 class="text-lg font-semibold tracking-tight">Plan d’étage & zones</h1>
-                <p class="text-xs  font-semibold"></p>
-            </header>
-            <section class="relative w-full self-start">
-                    <img src="./assets/plan.jpg" alt="plan d'etrage"
-                        class="w-full max-h-screen h-auto block">
+  <main class="flex">
 
-                    <div class="absolute top-0 left-0 w-full h-full grid 
-                        grid-cols-[38%_17%_22%_22%] 
-                        grid-rows-[33.5%_32%_32.5%]">
+    <aside class="w-48 lg:w-72 bg-slate-900 border-r border-slate-800">
+      <div class="flex items-center justify-between px-3 py-2 border-b border-slate-800">
+        <div>
+          <p class="text-sm font-semibold">WorkSphere</p>
+          <p class="text-xs text-slate-400">Gestion visuelle du personnel</p>
+        </div>
+        <img src="./assets/logoWorkspace.jpg" alt="Logo WorkSphere" class="h-10 w-10 rounded-full object-cover">
+      </div>
 
-                        <div aria-label="Salle à Manger"
-                            class="col-start-1 row-start-1 
-                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
-                        </div>
+      <nav class="flex gap-2 p-3 border-b border-slate-800">
+        <button id="btnOuvrirForm" class="px-3 py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">
+          + Ajouter
+        </button>
+        <button class="px-3 py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">
+          Auto Repair
+        </button>
+      </nav>
 
-                        <div aria-label="Salon"
-                            class="col-start-1 row-start-2 row-span-2 
-                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
-                        </div>
-                        <div aria-label="Bureau 1"
-                            class="col-start-3 row-start-1 
-                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
-                        </div>
-                        <div aria-label="Bureau 2"
-                            class="col-start-4 row-start-1 
-                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
-                        </div>
+      <section class="p-3 border-b border-slate-800">
+        <div class="relative">
+          <input id="champRecherche" type="text" placeholder="Rechercher par nom ou rôle…"
+            class="w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500" />
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-500">🔍</span>
+        </div>
+      </section>
 
-                        <div aria-label="Salle 8"
-                            class="col-start-3 row-start-3 
-                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
-                        </div>
+      <section aria-labelledby="filtres-titre" class="p-3 border-b border-slate-800">
+        <h2 id="filtres-titre" class="sr-only">Filtres</h2>
+        <ul id="listeFiltres" class="flex flex-wrap gap-2">
+          <li><button class="px-3 py-1 rounded bg-amber-600 text-slate-950 text-xs" data-role="tous">Tous</button></li>
+          <li><button class="px-3 py-1 rounded bg-slate-800 text-xs hover:bg-slate-700" data-role="it">IT</button></li>
+          <li><button class="px-3 py-1 rounded bg-slate-800 text-xs hover:bg-slate-700" data-role="rh">RH</button></li>
+          <li><button class="px-3 py-1 rounded bg-slate-800 text-xs hover:bg-slate-700"
+              data-role="securite">Sécurité</button></li>
+          <li><button class="px-3 py-1 rounded bg-slate-800 text-xs hover:bg-slate-700"
+              data-role="support">Support</button></li>
+        </ul>
+      </section>
 
-                        <div aria-label="Salle 9"
-                            class="col-start-4 row-start-3 
-                               cursor-pointer rounded border-2 border-transparent bg-blue-500/20 transition-all hover:border-blue-700 hover:bg-blue-500/40">
-                        </div>
+      <section aria-labelledby="liste-employes-titre" class="p-3 space-y-2">
+        <h2 id="liste-employes-titre" class="sr-only">Employés</h2>
+        <div id="listeEmployes" class="space-y-2">
+          <!-- carte wokrkers -->
+        </div>
+      </section>
+    </aside>
 
-                    </div>
-                </div>
-            </section>
-        </main>
+    <section class="relative w-full self-start">
+
+      <img src="./assets/plan.jpg" alt="plan d'etrage" class="w-full max-h-screen h-auto block">
+
+      <div class="absolute top-0 left-0 w-full h-full grid grid-cols-[38%_17%_22%_22%]  grid-rows-[33.5%_32%_32.5%]">
+
+
+        <article id="zone-conference"
+          class="col-start-1 row-start-1 rounded border border-transparent bg-blue-500/20  hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Salle de conférence</h3>
+          <div class="mt-1 text-xs text-slate-300" id="conference"></div>
+        </article>
+
+        <div id="zone-salon"
+          class="col-start-1 row-start-2 row-span-2 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Salon du personnel</h3>
+          <div class="mt-1 text-xs text-slate-300" id="salon"></div>
+        </div>
+
+        <div id="zone-reception"
+          class="col-start-3 row-start-3 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Réception</h3>
+          <div class="mt-1 text-xs text-slate-300" id="reception"></div>
+        </div>
+
+        <div id="zone-serveurs"
+          class="col-start-3 row-start-1 rounded border border-transparent bg-blue-500/20  hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Salle des serveurs</h3>
+          <div class="mt-1 text-xs text-slate-300" id="serveurs"></div>
+        </div>
+
+        <div id="zone-securite"
+          class="col-start-4 row-start-1 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Salle de sécurité</h3>
+          <div class="mt-1 text-xs text-slate-300" id="securite"></div>
+        </div>
+
+        <div id="zone-archives"
+          class="col-start-4 row-start-3 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Salle d archives</h3>
+          <div class="mt-1 text-xs text-slate-300" id="archives"></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <section id="modalEmploye" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4" role="dialog"
+    aria-modal="true" aria-labelledby="titreForm">
+    <form id="formEmploye"
+      class="w-full overflow-auto  max-w-3xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
+      <header class="flex items-center justify-between">
+        <h2 id="titreForm" class="text-lg font-semibold">Ajouter un employé</h2>
+        <button type="button" id="btnFermerForm" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
+      </header>
+
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="nom" class="block text-xs text-slate-300 mb-1">Nom</label>
+          <input id="nom" type="text" placeholder="Ex : Rouaki"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <div>
+          <label for="prenom" class="block text-xs text-slate-300 mb-1">Prénom</label>
+          <input id="prenom" type="text" placeholder="Ex : Mouhsine"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <div>
+          <label for="photo" class="block text-xs text-slate-300 mb-1">Photo (URL)</label>
+          <input id="photo" type="url" placeholder="https://exemple.com/photo.jpg"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <div>
+          <label for="role" class="block text-xs text-slate-300 mb-1">Rôle</label>
+          <input id="role" type="text" placeholder="Ex : Développeur Front-End"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <div>
+          <label for="email" class="block text-xs text-slate-300 mb-1">Email</label>
+          <input id="email" type="email" placeholder="exemple@entreprise.com"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <div class="md:col-span-1">
+          <label for="phone" class="block text-xs text-slate-300 mb-1">Téléphone</label>
+          <input id="phone" type="tel" placeholder="+212 6 12 34 56 78"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+        </div>
+      </section>
+
+
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-semibold">Expériences professionnelles</h3>
+        </div>
+        <p class="text-xs text-slate-400">Ajoute une ou plusieurs expériences (entreprise, période).</p>
+
+        <div id="conteneurExperiences" class="space-y-3"></div>
+
+        <button type="button" id="btnAjouterExperience"
+          class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">
+          ＋ Ajouter une expérience
+        </button>
+      </section>
+
+      <footer class="flex justify-end gap-2 pt-4 border-t border-slate-800">
+        <button type="button" id="btnAnnuler"
+          class="px-4 py-2 rounded border border-slate-700 text-sm hover:bg-slate-800">Annuler</button>
+        <button type="submit"
+          class="px-5 py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">Enregistrer</button>
+      </footer>
+    </form>
+  </section>
+  <!-- MODAL DETAILS EMPLOYÉ -->
+  <section id="modalDetailsEmploye"
+    class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-[60] hidden items-center justify-center bg-black/40"
+    role="dialog" aria-modal="true">
+
+    <div class="w-full max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
+
+      <header class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold" id="titreDetails">Détails de l’employé</h2>
+        <button type="button" id="btnFermerDetails" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
+      </header>
+
+      <div class="flex gap-4">
+        <img id="detailsPhoto" src="" alt="Photo employé"
+          class="h-24 w-24 rounded-full object-cover border border-slate-700">
+
+        <div class="flex flex-col gap-1">
+          <p><span class="font-semibold">Nom :</span> <span id="detailsNom">-</span></p>
+          <p><span class="font-semibold">Prénom :</span> <span id="detailsPrenom">-</span></p>
+          <p><span class="font-semibold">Rôle :</span> <span id="detailsRole">-</span></p>
+          <p><span class="font-semibold">Email :</span> <span id="detailsEmail">-</span></p>
+          <p><span class="font-semibold">Téléphone :</span> <span id="detailsPhone">-</span></p>
+        </div>
+      </div>
+
+      <section>
+        <h3 class="text-md font-semibold mb-2">Expériences professionnelles</h3>
+        <ul id="detailsExperiences" class="space-y-2 text-sm text-slate-300">
+          <!-- rempli dynamiquement -->
+        </ul>
+      </section>
+
+      <footer class="flex justify-end">
+        <button id="btnFermerDetails2" class="px-4 py-2 rounded bg-amber-500 text-slate-900 hover:bg-amber-600">
+          Fermer
+        </button>
+      </footer>
+
     </div>
+  </section>
+
+
+  <script src="./js/testScript.js" defer></script>
 </body>
 
 </html>

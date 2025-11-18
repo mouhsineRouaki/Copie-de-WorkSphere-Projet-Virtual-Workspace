@@ -1,353 +1,236 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <title>WorkSphere - Gestion du personnel</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Tailwind via CDN -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WorkSphere - Gestion visuelle du personnel</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#f3f4ff',
-              100: '#e0e7ff',
-              500: '#4f46e5',
-              600: '#4338ca',
-              900: '#1e1b4b'
-            },
-            status: {
-              green: '#16a34a',
-              orange: '#f97316',
-              red: '#ef4444'
-            }
-          }
-        }
-      }
-    }
-  </script>
 </head>
+
 <body class="min-h-screen bg-slate-950 text-slate-100">
 
-  <!-- App container -->
-  <div class="min-h-screen flex flex-col lg:flex-row">
+  <main class="flex">
 
-    <!-- SIDEBAR : Unassigned staff -->
-    <aside class="w-full lg:w-80 xl:w-96 border-b lg:border-b-0 lg:border-r border-slate-800 bg-slate-900/60 backdrop-blur">
-      <div class="h-full flex flex-col">
-        <!-- Logo / titre -->
-        <div class="px-4 py-4 border-b border-slate-800 flex items-center justify-between gap-3">
-          <div>
-            <h1 class="text-lg font-semibold tracking-tight">WorkSphere</h1>
-            <p class="text-xs text-slate-400">Gestion visuelle du personnel</p>
-          </div>
-          <span class="inline-flex items-center justify-center w-9 h-9 rounded-2xl bg-brand-600 text-xs font-semibold">
-            v1
-          </span>
-        </div>
-
-        <!-- Boutons actions -->
-        <div class="px-4 py-3 flex flex-wrap items-center gap-2 border-b border-slate-800">
-          <button
-            id="btnAddWorker"
-            class="inline-flex items-center gap-1 rounded-full bg-status-green px-3 py-1.5 text-xs font-semibold shadow hover:brightness-110 transition">
-            <span class="text-base leading-none">+</span> Add New Worker
-          </button>
-
-          <button
-            class="inline-flex items-center gap-1 rounded-full border border-slate-700 px-3 py-1.5 text-xs text-slate-200 hover:bg-slate-800 transition">
-            🔄 Auto layout
-          </button>
-        </div>
-
-        <!-- Recherche / filtre -->
-        <div class="px-4 py-3 border-b border-slate-800 space-y-2">
-          <div class="relative">
-            <input
-              type="text"
-              placeholder="Rechercher par nom ou rôle…"
-              class="w-full rounded-xl bg-slate-900/80 border border-slate-700 px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500" />
-            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 text-xs">🔍</span>
-          </div>
-          <div class="flex gap-1 flex-wrap">
-            <button class="px-2 py-1 text-[10px] rounded-full bg-slate-800 text-slate-200">Tous</button>
-            <button class="px-2 py-1 text-[10px] rounded-full border border-status-green/60 text-status-green">Manager</button>
-            <button class="px-2 py-1 text-[10px] rounded-full border border-status-orange/60 text-status-orange">IT</button>
-            <button class="px-2 py-1 text-[10px] rounded-full border border-status-red/60 text-status-red">Secu</button>
-          </div>
-        </div>
-
-        <!-- Liste des employés non assignés -->
-        <div class="flex-1 overflow-y-auto p-4 space-y-3" id="unassignedList">
-          <!-- Carte employé - exemple -->
-          <article class="group flex items-center gap-3 rounded-2xl bg-slate-900/70 border border-slate-800 px-3 py-2 hover:border-brand-500/70 hover:bg-slate-900 cursor-pointer transition">
-            <img
-              src="https://via.placeholder.com/40x40"
-              alt="Photo employé"
-              class="h-10 w-10 rounded-xl object-cover border border-slate-700" />
-            <div class="flex-1">
-              <h3 class="text-xs font-semibold leading-tight">Alex Martin</h3>
-              <p class="text-[11px] text-slate-400">Réceptionniste</p>
-              <p class="text-[10px] text-slate-500">alex.martin@worksphere.com</p>
-            </div>
-            <div class="flex flex-col items-end gap-1">
-              <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-300">Unassigned</span>
-              <button class="text-[10px] text-brand-300 group-hover:text-brand-200">Voir</button>
-            </div>
-          </article>
-
-          <!-- Dupliquer le bloc ci-dessus avec JS pour chaque employé -->
-        </div>
-      </div>
-    </aside>
-
-    <!-- MAIN AREA -->
-    <main class="flex-1 flex flex-col">
-
-      <!-- Header -->
-      <header class="border-b border-slate-800 px-4 lg:px-6 py-3 flex flex-wrap gap-3 items-center justify-between bg-slate-950/70">
+    <aside class="w-48 lg:w-72 bg-slate-900 border-r border-slate-800">
+      <div class="flex items-center justify-between px-3 py-2 border-b border-slate-800">
         <div>
-          <h2 class="text-base font-semibold">Plan d’étage & zones</h2>
-          <p class="text-xs text-slate-400">
-            Ajoute, déplace ou retire les employés directement sur le plan.
-          </p>
+          <p class="text-sm font-semibold">WorkSphere</p>
+          <p class="text-xs text-slate-400">Gestion visuelle du personnel</p>
         </div>
-        <div class="flex items-center gap-2 text-[11px]">
-          <div class="hidden md:flex items-center gap-2">
-            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-900 border border-slate-700">
-              <span class="w-2 h-2 rounded-full bg-status-green"></span> Zones OK
-            </span>
-            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-900 border border-status-red/60">
-              <span class="w-2 h-2 rounded-full bg-status-red"></span> Zones obligatoires vides
-            </span>
-          </div>
-          <button class="px-2 py-1 rounded-full border border-slate-700 text-slate-300 hover:bg-slate-800">Vue Desktop</button>
-          <button class="px-2 py-1 rounded-full border border-slate-700 text-slate-300 hover:bg-slate-800">Vue Mobile</button>
-        </div>
-      </header>
+        <img src="./assets/logoWorkspace.jpg" alt="Logo WorkSphere" class="h-10 w-10 rounded-full object-cover">
+      </div>
 
-      <!-- Contenu principal -->
-      <section class="flex-1 p-4 lg:p-6 grid gap-6 xl:grid-cols-[2.2fr,1fr]">
+      <nav class="flex gap-2 p-3 border-b border-slate-800">
+        <button id="btnOuvrirForm" class="px-3 py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">
+          + Ajouter
+        </button>
+        <button class="px-3 py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">
+          Auto Repair
+        </button>
+      </nav>
 
-        <!-- Plan d’étage -->
-        <div class="relative rounded-3xl overflow-hidden bg-slate-900 border border-slate-800 shadow-xl">
-          <!-- Image du plan -->
-          <img
-            src="plan.jpeg"
-            alt="Plan d'étage WorkSphere"
-            class="w-full object-cover max-h-[520px] md:max-h-none" />
-
-          <!-- Overlay des zones (positions approximatives -> à ajuster selon ton image) -->
-          <!-- Réception -->
-          <button
-            data-zone="reception"
-            class="absolute top-[45%] left-[5%] md:left-[12%] px-2 py-1 rounded-xl bg-slate-900/80 border-2 border-status-red text-[10px] md:text-xs font-semibold text-slate-100 shadow">
-            Réception
-            <span class="block text-[9px] text-slate-400">Capacité : 2</span>
-          </button>
-
-          <!-- Salle de conférence -->
-          <button
-            data-zone="conference"
-            class="absolute top-[8%] left-[10%] px-2 py-1 rounded-xl bg-slate-900/70 border border-slate-600 text-[10px] md:text-xs font-semibold">
-            Salle de conférence
-          </button>
-
-          <!-- Salle des serveurs -->
-          <button
-            data-zone="serveurs"
-            class="absolute top-[18%] right-[18%] px-2 py-1 rounded-xl bg-slate-900/80 border-2 border-status-red text-[10px] md:text-xs font-semibold">
-            Salle des serveurs
-          </button>
-
-          <!-- Salle de sécurité -->
-          <button
-            data-zone="securite"
-            class="absolute top-[38%] right-[5%] px-2 py-1 rounded-xl bg-slate-900/80 border-2 border-status-red text-[10px] md:text-xs font-semibold">
-            Salle de sécurité
-          </button>
-
-          <!-- Salle du personnel -->
-          <button
-            data-zone="personnel"
-            class="absolute bottom-[18%] left-[15%] px-2 py-1 rounded-xl bg-slate-900/70 border border-slate-600 text-[10px] md:text-xs font-semibold">
-            Salle du personnel
-          </button>
-
-          <!-- Salle d’archives -->
-          <button
-            data-zone="archives"
-            class="absolute bottom-[8%] right-[20%] px-2 py-1 rounded-xl bg-slate-900/80 border-2 border-status-red text-[10px] md:text-xs font-semibold">
-            Salle d’archives
-          </button>
-        </div>
-
-        <!-- Colonne de droite : détails zones / profil -->
-        <div class="space-y-4">
-          <!-- Résumé des zones -->
-          <section class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3">
-            <header class="flex items-center justify-between gap-2">
-              <h3 class="text-sm font-semibold">Zones & capacités</h3>
-              <span class="text-[10px] text-slate-400">Clique sur une zone pour gérer les employés</span>
-            </header>
-
-            <!-- Carte de zone (exemple) -->
-            <article class="rounded-2xl border border-slate-800 bg-slate-950/60 px-3 py-3 space-y-2">
-              <div class="flex items-center justify-between gap-2">
-                <div>
-                  <h4 class="text-xs font-semibold">Réception</h4>
-                  <p class="text-[10px] text-slate-400">Uniquement Réceptionnistes • Capacité 2</p>
-                </div>
-                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-status-red/10 text-[10px] text-status-red">
-                  ⚠ Obligatoire
-                </span>
-              </div>
-              <div class="flex items-center justify-between gap-2">
-                <div class="flex -space-x-2">
-                  <!-- Avatars placeholder -->
-                  <span class="w-6 h-6 rounded-full bg-slate-700 border border-slate-900 text-[9px] flex items-center justify-center">A</span>
-                  <span class="w-6 h-6 rounded-full bg-slate-700 border border-slate-900 text-[9px] flex items-center justify-center">M</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  <button
-                    class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-status-green text-xs font-bold shadow hover:brightness-110">
-                    +
-                  </button>
-                  <button
-                    class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-800 text-xs hover:bg-slate-700">
-                    X
-                  </button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Dupliquer une carte par zone via JS -->
-          </section>
-
-          <!-- Profil détaillé (drawer simple) -->
-          <section class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3">
-            <header class="flex items-center justify-between gap-2">
-              <h3 class="text-sm font-semibold">Profil sélectionné</h3>
-              <span class="text-[10px] text-slate-500">Clique sur un employé pour voir le détail</span>
-            </header>
-
-            <div class="flex gap-3 items-start">
-              <div class="w-16 h-16 rounded-2xl bg-slate-800 overflow-hidden flex-shrink-0">
-                <img
-                  src="https://via.placeholder.com/80x80"
-                  alt="Photo employé sélectionné"
-                  class="w-full h-full object-cover" />
-              </div>
-              <div class="flex-1 text-xs space-y-1">
-                <p class="text-sm font-semibold">– Aucun employé sélectionné –</p>
-                <p class="text-slate-400">Sélectionne un collaborateur dans la liste ou sur le plan pour afficher ses informations.</p>
-              </div>
-            </div>
-          </section>
+      <section class="p-3 border-b border-slate-800">
+        <div class="relative">
+          <input id="champRecherche" type="text" placeholder="Rechercher par nom ou rôle…"
+            class="w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500" />
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-500">🔍</span>
         </div>
       </section>
-    </main>
-  </div>
 
-  <!-- MODALE : Ajouter un employé -->
-  <div
-    id="addWorkerModal"
-    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur">
-    <div class="w-full max-w-lg mx-4 rounded-3xl bg-slate-950 border border-slate-800 shadow-2xl">
-      <header class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
-        <h3 class="text-sm font-semibold">Ajouter un nouvel employé</h3>
-        <button class="text-slate-400 text-lg leading-none hover:text-slate-200" data-close-modal>×</button>
+      <section aria-labelledby="filtres-titre" class="p-3 border-b border-slate-800">
+        <h2 id="filtres-titre" class="sr-only">Filtres</h2>
+        <ul id="listeFiltres" class="flex flex-wrap gap-2">
+          <li><button class="px-3 py-1 rounded bg-amber-600 text-slate-950 text-xs" data-role="tous">Tous</button></li>
+          <li><button class="px-3 py-1 rounded bg-slate-800 text-xs hover:bg-slate-700" data-role="it">IT</button></li>
+          <li><button class="px-3 py-1 rounded bg-slate-800 text-xs hover:bg-slate-700" data-role="rh">RH</button></li>
+          <li><button class="px-3 py-1 rounded bg-slate-800 text-xs hover:bg-slate-700"
+              data-role="securite">Sécurité</button></li>
+          <li><button class="px-3 py-1 rounded bg-slate-800 text-xs hover:bg-slate-700"
+              data-role="support">Support</button></li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="liste-employes-titre" class="p-3 space-y-2">
+        <h2 id="liste-employes-titre" class="sr-only">Employés</h2>
+        <div id="listeEmployes" class="space-y-2">
+          <!-- carte wokrkers -->
+        </div>
+      </section>
+    </aside>
+
+    <section class="relative w-full self-start">
+
+      <img src="./assets/plan.jpg" alt="plan d'etrage" class="w-full max-h-screen h-auto block">
+
+      <div class="absolute top-0 left-0 w-full h-full grid grid-cols-[38%_17%_22%_22%]  grid-rows-[33.5%_32%_32.5%]">
+
+
+        <article id="zone-conference"
+          class="col-start-1 row-start-1 rounded border border-transparent bg-blue-500/20  hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Salle de conférence</h3>
+          <div class="mt-1 text-xs text-slate-300" id="conference"></div>
+        </article>
+
+        <div id="zone-salon"
+          class="col-start-1 row-start-2 row-span-2 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Salon du personnel</h3>
+          <div class="mt-1 text-xs text-slate-300" id="salon"></div>
+        </div>
+
+        <div id="zone-reception"
+          class="col-start-3 row-start-3 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Réception</h3>
+          <div class="mt-1 text-xs text-slate-300" id="reception"></div>
+        </div>
+
+        <div id="zone-serveurs"
+          class="col-start-3 row-start-1 rounded border border-transparent bg-blue-500/20  hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Salle des serveurs</h3>
+          <div class="mt-1 text-xs text-slate-300" id="serveurs"></div>
+        </div>
+
+        <div id="zone-securite"
+          class="col-start-4 row-start-1 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Salle de sécurité</h3>
+          <div class="mt-1 text-xs text-slate-300" id="securite"></div>
+        </div>
+
+        <div id="zone-archives"
+          class="col-start-4 row-start-3 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
+          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+            Ajouter</button>
+          <h3 class="text-xs font-semibold mt-2">Salle d archives</h3>
+          <div class="mt-1 text-xs text-slate-300" id="archives"></div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <section id="modalEmploye" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4" role="dialog"
+    aria-modal="true" aria-labelledby="titreForm">
+    <form id="formEmploye"
+      class="w-full overflow-auto  max-w-3xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
+      <header class="flex items-center justify-between">
+        <h2 id="titreForm" class="text-lg font-semibold">Ajouter un employé</h2>
+        <button type="button" id="btnFermerForm" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
       </header>
-      <form class="p-5 space-y-4 text-xs">
-        <div class="grid md:grid-cols-2 gap-3">
-          <div>
-            <label class="block mb-1 text-[11px] text-slate-300">Nom</label>
-            <input type="text" class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500" />
-          </div>
-          <div>
-            <label class="block mb-1 text-[11px] text-slate-300">Rôle</label>
-            <select class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500">
-              <option>Réceptionniste</option>
-              <option>Technicien IT</option>
-              <option>Agent de sécurité</option>
-              <option>Manager</option>
-              <option>Nettoyage</option>
-              <option>Autre</option>
-            </select>
-          </div>
+
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="nom" class="block text-xs text-slate-300 mb-1">Nom</label>
+          <input id="nom" type="text" placeholder="Ex : Rouaki"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
         </div>
 
-        <div class="grid md:grid-cols-[1.2fr,0.8fr] gap-3">
-          <div class="space-y-3">
-            <div>
-              <label class="block mb-1 text-[11px] text-slate-300">Photo (URL)</label>
-              <input type="url" class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-brand-500" />
-            </div>
-            <div class="grid md:grid-cols-2 gap-3">
-              <div>
-                <label class="block mb-1 text-[11px] text-slate-300">Email</label>
-                <input type="email" class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-brand-500" />
-              </div>
-              <div>
-                <label class="block mb-1 text-[11px] text-slate-300">Téléphone</label>
-                <input type="tel" class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-brand-500" />
-              </div>
-            </div>
-          </div>
-
-          <!-- Prévisualisation photo -->
-          <div class="rounded-2xl border border-slate-800 bg-slate-900 flex flex-col items-center justify-center p-3 gap-2">
-            <span class="text-[11px] text-slate-400">Prévisualisation photo</span>
-            <div class="w-20 h-20 rounded-2xl bg-slate-800 overflow-hidden">
-              <img
-                id="previewPhoto"
-                src="https://via.placeholder.com/80x80"
-                alt="Prévisualisation"
-                class="w-full h-full object-cover" />
-            </div>
-          </div>
+        <div>
+          <label for="prenom" class="block text-xs text-slate-300 mb-1">Prénom</label>
+          <input id="prenom" type="text" placeholder="Ex : Mouhsine"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
         </div>
 
-        <!-- Expériences professionnelles (à rendre dynamique avec JS) -->
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <label class="text-[11px] text-slate-300">Expériences professionnelles</label>
-            <button type="button" class="px-2 py-1 rounded-full bg-status-orange text-[10px] font-semibold">+ Ajouter une expérience</button>
-          </div>
-          <div class="space-y-2 max-h-32 overflow-y-auto">
-            <div class="grid md:grid-cols-3 gap-2">
-              <input type="text" placeholder="Poste"
-                     class="rounded-xl bg-slate-900 border border-slate-700 px-2 py-1.5 text-[11px]" />
-              <input type="text" placeholder="Entreprise"
-                     class="rounded-xl bg-slate-900 border border-slate-700 px-2 py-1.5 text-[11px]" />
-              <input type="text" placeholder="Années"
-                     class="rounded-xl bg-slate-900 border border-slate-700 px-2 py-1.5 text-[11px]" />
-            </div>
-          </div>
+        <div>
+          <label for="photo" class="block text-xs text-slate-300 mb-1">Photo (URL)</label>
+          <input id="photo" type="url" placeholder="https://exemple.com/photo.jpg"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
         </div>
 
-        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
-          <button type="button" data-close-modal
-                  class="px-3 py-1.5 rounded-full border border-slate-700 text-[11px] hover:bg-slate-800">
-            Annuler
-          </button>
-          <button type="submit"
-                  class="px-4 py-1.5 rounded-full bg-status-green text-[11px] font-semibold hover:brightness-110">
-            Enregistrer
-          </button>
+        <div>
+          <label for="role" class="block text-xs text-slate-300 mb-1">Rôle</label>
+          <input id="role" type="text" placeholder="Ex : Développeur Front-End"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
         </div>
-      </form>
+
+        <div>
+          <label for="email" class="block text-xs text-slate-300 mb-1">Email</label>
+          <input id="email" type="email" placeholder="exemple@entreprise.com"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <div class="md:col-span-1">
+          <label for="phone" class="block text-xs text-slate-300 mb-1">Téléphone</label>
+          <input id="phone" type="tel" placeholder="+212 6 12 34 56 78"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+        </div>
+      </section>
+
+
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-semibold">Expériences professionnelles</h3>
+        </div>
+        <p class="text-xs text-slate-400">Ajoute une ou plusieurs expériences (entreprise, période).</p>
+
+        <div id="conteneurExperiences" class="space-y-3"></div>
+
+        <button type="button" id="btnAjouterExperience"
+          class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">
+          ＋ Ajouter une expérience
+        </button>
+      </section>
+
+      <footer class="flex justify-end gap-2 pt-4 border-t border-slate-800">
+        <button type="button" id="btnAnnuler"
+          class="px-4 py-2 rounded border border-slate-700 text-sm hover:bg-slate-800">Annuler</button>
+        <button type="submit"
+          class="px-5 py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">Enregistrer</button>
+      </footer>
+    </form>
+  </section>
+  <!-- MODAL DETAILS EMPLOYÉ -->
+  <section id="modalDetailsEmploye"
+    class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-[60] hidden items-center justify-center bg-black/40"
+    role="dialog" aria-modal="true">
+
+    <div class="w-full max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
+
+      <header class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold" id="titreDetails">Détails de l’employé</h2>
+        <button type="button" id="btnFermerDetails" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
+      </header>
+
+      <div class="flex gap-4">
+        <img id="detailsPhoto" src="" alt="Photo employé"
+          class="h-24 w-24 rounded-full object-cover border border-slate-700">
+
+        <div class="flex flex-col gap-1">
+          <p><span class="font-semibold">Nom :</span> <span id="detailsNom">-</span></p>
+          <p><span class="font-semibold">Prénom :</span> <span id="detailsPrenom">-</span></p>
+          <p><span class="font-semibold">Rôle :</span> <span id="detailsRole">-</span></p>
+          <p><span class="font-semibold">Email :</span> <span id="detailsEmail">-</span></p>
+          <p><span class="font-semibold">Téléphone :</span> <span id="detailsPhone">-</span></p>
+        </div>
+      </div>
+
+      <section>
+        <h3 class="text-md font-semibold mb-2">Expériences professionnelles</h3>
+        <ul id="detailsExperiences" class="space-y-2 text-sm text-slate-300">
+          <!-- rempli dynamiquement -->
+        </ul>
+      </section>
+
+      <footer class="flex justify-end">
+        <button id="btnFermerDetails2" class="px-4 py-2 rounded bg-amber-500 text-slate-900 hover:bg-amber-600">
+          Fermer
+        </button>
+      </footer>
+
     </div>
-  </div>
+  </section>
 
-  <!-- Ici tu ajouteras ton JavaScript pour :
-       - Ouvrir / fermer la modale
-       - Gérer la liste des employés
-       - Appliquer les règles de zones
-       - Drag & Drop, localStorage, etc.
-  -->
+
+  <script src="./js/testScript.js" defer></script>
 </body>
+
 </html>
