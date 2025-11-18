@@ -67,11 +67,11 @@
 
 
         <article id="zone-conference"
-          class="col-start-1 row-start-1 rounded border border-transparent bg-blue-500/20  hover:border-blue-700 hover:bg-blue-500/40">
+          class="col-start-1 row-start-1  justify-center rounded border border-transparent bg-blue-500/20  hover:border-blue-700 hover:bg-blue-500/40">
           <button id="btn-zone-conference" type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
             Ajouter</button>
           <h3 class="text-xs font-semibold mt-2">Salle de conférence</h3>
-          <div class="mt-1 text-xs text-slate-300" id="conference"></div>
+          <div class="grid grid-cols-3 justify-around  mt-1 text-xs text-slate-300" id="conference"></div>
         </article>
 
         <div id="zone-reception"
@@ -84,7 +84,7 @@
 
         <div id="zone-staff-room"
           class="col-start-3 row-start-3 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
-          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+          <button id="btn-zone-staff-room" type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
             Ajouter</button>
           <h3 class="text-xs font-semibold mt-2">Salon staff</h3>
           <div class="mt-1 text-xs text-slate-300" id="staffRoom"></div>
@@ -100,7 +100,7 @@
 
         <div id="zone-securite"
           class="col-start-4 row-start-1 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
-          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+          <button id="btn-zone-securite" type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
             Ajouter</button>
           <h3 class="text-xs font-semibold mt-2">Salle de sécurité</h3>
           <div class="mt-1 text-xs text-slate-300" id="securite"></div>
@@ -108,7 +108,7 @@
 
         <div id="zone-archives"
           class="col-start-4 row-start-3 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
-          <button type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+          <button id="btn-zone-archives" type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
             Ajouter</button>
           <h3 class="text-xs font-semibold mt-2">Salle d archives</h3>
           <div class="mt-1 text-xs text-slate-300" id="archives"></div>
@@ -243,14 +243,14 @@
         <button type="button" id="btnFermerAllWorkers" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
       </div>
 
-       <div id="contenairWorker" class="flex "></div>
+       <div id="contenairWorker" class="grid grid-cols-2"></div>
     </div>
    
     </div>
   </section>
 
 
-  <script src="./js/testScript.js" defer></script>
+  <script src="./js/testScript.js" ></script>
 </body>
 
 </html>
