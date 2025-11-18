@@ -78,7 +78,7 @@ btnAjouterExperience.addEventListener('click', () => {
 });
 
 
-function carteWorker(e) {
+function carteWorkerInfo(e) {
   let article = document.createElement("article")
   article.setAttribute("class","flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
   article.innerHTML = `
@@ -94,6 +94,25 @@ function carteWorker(e) {
   })
   return article
 }
+function carteChangerRoom(e,nouvelleRoom) {
+  let data = getsWorkers();
+  let article = document.createElement("article")
+  article.setAttribute("class","flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
+  article.innerHTML = `
+      <img src="${e.photo}" alt="Photo de ${e.prenom} ${e.nom}" class="h-10 w-10 rounded-full object-cover">
+      <div class="min-w-0">
+        <h3 class="text-sm font-medium truncate">${(e.prenom)} ${(e.nom)}</h3>
+        <p class="text-xs text-slate-400 truncate">${e.role}</p>
+        <p class="text-xs text-slate-500 truncate">${e.email}</p>
+      </div>
+  `;
+  article.addEventListener('click',()=>{
+    data.find(w=>w.id === e.id).currentRoom = nouvelleRoom
+    saveWorkers(data)
+    RemplirRoom(["conference","personel","reception","serveurs","securite","archives"])
+  })
+  return article
+}
 
 function loadWorkers() {
   const data = getsWorkers();
@@ -101,8 +120,8 @@ function loadWorkers() {
   if(data.lenght === 0){
     listeEmployes.innerHTML =`<p class="text-sm text-slate-400">Aucun workers.</p>`;
   }else{
-    data.forEach(workers => {
-       let card = carteWorker(workers);
+    data.filter(w=>w.currentRoom === "unsigned").forEach(workers => {
+       let card = carteWorkerInfo(workers);
        listeEmployes.append(card)
     });
   }
@@ -136,8 +155,9 @@ form.addEventListener('submit', (e) => {
     }
     experiences.push(experiece);
   });
-
-  const worker = { nom, prenom, email, phone, photo, role, experiences };
+  let currentRoom = "unsigned"
+  let id = Date.now()
+  const worker = { id,nom, prenom, email, phone, photo, role, experiences , currentRoom };
 
   const data = getsWorkers();
   data.push(worker);
@@ -161,9 +181,18 @@ function ouvrirModelDetails(worker) {
 
     if (worker.experiences.length > 0) {
         worker.experiences.forEach(exp => {
-            const li = document.createElement("li");
-            li.textContent = `${exp.entreprise} — ${exp.periode}`;
-            expList.appendChild(li);
+            const div = document.createElement("div");
+            div.setAttribute("class","border border-black flex flex-col items-center")
+            const pEntreprise = document.createElement("p");
+            pEntreprise.textContent = `entreprise:${exp.entreprise}`
+            const pDateFrom = document.createElement("p");
+            pDateFrom.textContent = `From:${exp.from}`
+            const pDateTo = document.createElement("p");
+            pDateTo.textContent = `To:${exp.to}`
+            div.appendChild(pEntreprise)
+            div.appendChild(pDateFrom)
+            div.appendChild(pDateTo)
+            expList.appendChild(div);
         });
     } else {
         expList.innerHTML = "<li>Aucune expérience renseignée.</li>";
@@ -175,6 +204,54 @@ document.getElementById("btnFermerDetails2").onclick =
 () => {
     document.getElementById("modalDetailsEmploye").classList.add("hidden");
 };
+
+function filterWorkers(button ,ListRole, nouvelleRoom){
+  let data = getsWorkers();
+  let model = document.getElementById("modalIntegrerWorker")
+  let btnFermer = document.getElementById("btnFermerAllWorkers")
+  btnFermer.addEventListener("click",()=>{
+    model.classList.add("hidden")
+  })
+  let container = document.getElementById("contenairWorker")
+  
+  button.addEventListener("click", ()=>{
+    container.innerHTML = "";
+    model.classList.remove("hidden")
+    ListRole.forEach(role=>{
+      data.filter(w=>w.role === role && w.currentRoom === "unsigned").forEach(w=>{
+        container.appendChild(carteChangerRoom(w,nouvelleRoom))
+      })
+    })
+  })
+
+
+}
+
+
+
+
+function RemplirRoom(listContainer){
+  let data  =  getsWorkers();
+  listContainer.forEach(container=>{
+    let listFiltrer = data.filter(w=>w.currentRoom === container)
+    let containere = document.getElementById(container)
+    containere.innerHTML = ""
+    listFiltrer.forEach(w=>{
+      containere.appendChild(carteWorkerInfo(w))
+    })
+  })
+}
+filterWorkers(document.getElementById("btn-zone-conference"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"reception")
+filterWorkers(document.getElementById("btn-zone-reception"),["receptionniste"],"reception")
+filterWorkers(document.getElementById("btn-zone-serveurs"),"receptionniste","reception")
+filterWorkers(document.getElementById("btn-zone-reception"),"receptionniste","reception")
+filterWorkers(document.getElementById("btn-zone-reception"),"receptionniste","reception")
+filterWorkers(document.getElementById("btn-zone-reception"),"receptionniste","reception")
+
+
+
+RemplirRoom(["conference","reception","staffRoom","serveurs","securite","archives"])
+
 
 
 loadWorkers();
