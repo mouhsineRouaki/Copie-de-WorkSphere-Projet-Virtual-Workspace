@@ -22,7 +22,8 @@
       </div>
 
       <div class="flex gap-2 p-3 border-b border-slate-800">
-        <button id="btnOuvrirForm" class="lg:px-3 lg:py-2  rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">
+        <button id="btnOuvrirForm"
+          class="lg:px-3 lg:py-2  rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">
           + Ajouter
         </button>
         <button class="lg:px-3 lg:py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">
@@ -60,23 +61,27 @@
 
     <section id="rooms" class="relative w-full">
 
-      <img src="./assets/plan.jpg" alt="plan d'etrage" class="w-full max-h-screen lg:min-h-screen md:min-h-screen min-h-[500px] block">
+      <img src="./assets/plan.jpg" alt="plan d'etrage" class="w-full max-h-screen h-[500px] lg:h-full md:h-full block">
 
-      <div class="absolute top-0 left-0 w-full h-full grid grid-cols-[38%_17%_22%_22%]  grid-rows-[33.5%_32%_32.5%]">
+      <div
+        class="absolute top-0 left-0 w-full h-full lg:min-h-screen  grid grid-cols-[38%_17%_22%_22%]  grid-rows-[33.5%_32%_32.5%] ">
 
-
-        <article id="zone-conference" class="col-start-1 row-start-1  justify-center  rounded border border-transparent bg-blue-500/20  hover:border-blue-700 hover:bg-blue-500/40">
+        <article id="zone-conference"
+          class="col-start-1 row-start-1  justify-center  rounded border border-transparent bg-blue-500/20  hover:border-blue-700 hover:bg-blue-500/40">
           <div class="flex flex-col justify-center mt-2 w-full ">
-            <button id="btn-zone-conference" type="button" class="lg:px-3 lg:py-1.5 lg:flex md:rounded  lg:rounded rounded-full bg-amber-500 text-slate-950 text-xs hover:bg-amber-600 w-auto">+
-            <span class="w-10 hidden lg:block ">Ajouter</span></button>
+            <button id="btn-zone-conference" type="button"
+              class="lg:px-3 lg:py-1.5 lg:flex md:rounded  lg:rounded rounded-full bg-amber-500 text-slate-950 text-xs hover:bg-amber-600 w-auto">+
+              <span class="w-10 hidden lg:block ">Ajouter</span></button>
             <h3 class="text-xs font-semibold text-center">Salle de conférence</h3>
           </div>
-          <div class="grid lg:grid-cols-3  md:grid-cols-3 grid-cols-3 justify-between   mt-3 text-xs text-slate-300" id="conference"></div>
+          <div class="grid lg:grid-cols-3  md:grid-cols-3 grid-cols-3 justify-between   mt-3 text-xs text-slate-300"
+            id="conference"></div>
         </article>
 
         <div id="zone-reception"
           class="col-start-1 row-start-2 row-span-2 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
-          <button id="btn-zone-reception" type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+          <button id="btn-zone-reception" type="button"
+            class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
             Ajouter</button>
           <h3 class="text-xs font-semibold mt-2">Salon du reception</h3>
           <div class="mt-1 text-xs text-slate-300" id="reception"></div>
@@ -84,7 +89,8 @@
 
         <div id="zone-staff-room"
           class="col-start-3 row-start-3 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
-          <button id="btn-zone-staff-room" type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+          <button id="btn-zone-staff-room" type="button"
+            class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
             Ajouter</button>
           <h3 class="text-xs font-semibold mt-2">Salon staff</h3>
           <div class="mt-1 text-xs text-slate-300" id="staffRoom"></div>
@@ -92,7 +98,8 @@
 
         <div id="zone-serveurs"
           class="col-start-3 row-start-1 rounded border border-transparent bg-blue-500/20  hover:border-blue-700 hover:bg-blue-500/40">
-          <button id="btn-zone-serveurs" type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+          <button id="btn-zone-serveurs" type="button"
+            class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
             Ajouter</button>
           <h3 class="text-xs font-semibold mt-2">Salle des serveurs</h3>
           <div class="mt-1 text-xs text-slate-300" id="serveurs"></div>
@@ -100,7 +107,8 @@
 
         <div id="zone-securite"
           class="col-start-4 row-start-1 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
-          <button id="btn-zone-securite" type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+          <button id="btn-zone-securite" type="button"
+            class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
             Ajouter</button>
           <h3 class="text-xs font-semibold mt-2">Salle de sécurité</h3>
           <div class="mt-1 text-xs text-slate-300" id="securite"></div>
@@ -108,7 +116,8 @@
 
         <div id="zone-archives"
           class="col-start-4 row-start-3 rounded border border-transparent bg-blue-500/20 p-2 hover:border-blue-700 hover:bg-blue-500/40">
-          <button id="btn-zone-archives" type="button" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
+          <button id="btn-zone-archives" type="button"
+            class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-xs hover:bg-amber-600">+
             Ajouter</button>
           <h3 class="text-xs font-semibold mt-2">Salle d archives</h3>
           <div class="mt-1 text-xs text-slate-300" id="archives"></div>
@@ -149,7 +158,8 @@
 
         <div>
           <label for="role" class="block text-xs text-slate-300 mb-1">Rôle</label>
-          <select id="role" type="text" placeholder="Ex : Développeur Front-End" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+          <select id="role" type="text" placeholder="Ex : Développeur Front-End"
+            class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
             <option value="receptionniste">Réceptionniste</option>
             <option value="it">Techniciens IT</option>
             <option value="securite">Agents de sécurité</option>
@@ -236,7 +246,8 @@
 
     </div>
   </section>
-  <section id="modalIntegrerWorker" class="fixed top-1/2 left-1/2 w-[50%] -translate-y-1/2 -translate-x-1/2  hidden  items-center justify-center">
+  <section id="modalIntegrerWorker"
+    class="fixed top-1/2 left-1/2 w-[50%] -translate-y-1/2 -translate-x-1/2  hidden  items-center justify-center">
     <div class="w-full  max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
 
       <div class="flex items-center justify-between">
@@ -244,14 +255,14 @@
         <button type="button" id="btnFermerAllWorkers" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
       </div>
 
-       <div id="contenairWorker" class="grid grid-cols-2"></div>
+      <div id="contenairWorker" class="grid grid-cols-2"></div>
     </div>
-   
+
     </div>
   </section>
 
 
-  <script src="./js/script.js" ></script>
+  <script src="./js/script.js"></script>
 </body>
 
 </html>

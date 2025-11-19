@@ -366,6 +366,12 @@
   .table {
     display: table;
   }
+  .aspect-16\/9 {
+    aspect-ratio: 16/9;
+  }
+  .aspect-\[16\/9\] {
+    aspect-ratio: 16/9;
+  }
   .h-3 {
     height: calc(var(--spacing) * 3);
   }
@@ -398,6 +404,9 @@
   }
   .h-100 {
     height: calc(var(--spacing) * 100);
+  }
+  .h-\[500px\] {
+    height: 500px;
   }
   .h-auto {
     height: auto;
@@ -518,6 +527,12 @@
   }
   .w-\[100\%\] {
     width: 100%;
+  }
+  .w-\[500\] {
+    width: 500;
+  }
+  .w-\[500px\] {
+    width: 500px;
   }
   .w-auto {
     width: auto;
@@ -755,6 +770,9 @@
   .border-transparent {
     border-color: transparent;
   }
+  .bg-\[url\] {
+    background-color: url;
+  }
   .bg-amber-200 {
     background-color: var(--color-amber-200);
   }
@@ -826,6 +844,21 @@
   }
   .bg-white {
     background-color: var(--color-white);
+  }
+  .bg-\[url\(\'\'\)\] {
+    background-image: url('');
+  }
+  .bg-\[url\(\'\.\/assets\/plan\.jpg\'\)\] {
+    background-image: url('./assets/plan.jpg');
+  }
+  .bg-\[url\(\)\] {
+    background-image: url();
+  }
+  .bg-cover {
+    background-size: cover;
+  }
+  .bg-center {
+    background-position: center;
   }
   .object-cover {
     object-fit: cover;
@@ -1198,6 +1231,11 @@
       display: none;
     }
   }
+  .md\:h-full {
+    @media (width >= 48rem) {
+      height: 100%;
+    }
+  }
   .md\:min-h-screen {
     @media (width >= 48rem) {
       min-height: 100vh;
@@ -1302,6 +1340,16 @@
   .lg\:h-5 {
     @media (width >= 64rem) {
       height: calc(var(--spacing) * 5);
+    }
+  }
+  .lg\:h-full {
+    @media (width >= 64rem) {
+      height: 100%;
+    }
+  }
+  .lg\:h-screen {
+    @media (width >= 64rem) {
+      height: 100vh;
     }
   }
   .lg\:min-h-screen {
