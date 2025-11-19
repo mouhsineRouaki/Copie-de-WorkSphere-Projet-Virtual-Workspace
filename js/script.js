@@ -1,5 +1,6 @@
 const STORAGE_KEY = 'workers';
 const LIMIT_ROOM = 5;
+let ROLE = "tous";
 const modal = document.getElementById('modalEmploye');
 const btnOuvrirForm = document.getElementById('btnOuvrirForm');
 const btnFermerForm = document.getElementById('btnFermerForm');
@@ -14,6 +15,9 @@ const champRecherche = document.getElementById('champRecherche');
 const listeFiltres = document.getElementById('listeFiltres');
 const InputPhoto = document.getElementById('photo');
 const PhotoUser = document.getElementById('imageUser');
+champRecherche.addEventListener('input' , ()=>{
+  loadUnsinedWorkers(champRecherche.value)
+})
 
 InputPhoto.addEventListener("input", () => {
   const url = InputPhoto.value.trim();
@@ -177,16 +181,34 @@ function carteRounded(e) {
 }
 
 
-function loadUnsinedWorkers() {
+function loadUnsinedWorkers(search = "") {
   const data = getsWorkers();
   listeEmployes.innerHTML ="";
   if(data.lenght === 0){
     listeEmployes.innerHTML =`<p class="text-sm text-slate-400">Aucun workers.</p>`;
   }else{
-    data.filter(w=>w.currentRoom === "unsigned").forEach(workers => {
-       let card = carteWorkerInfo(workers);
-       listeEmployes.append(card)
-    });
+    if(ROLE === "tous"){
+      data.filter(w=>w.currentRoom === "unsigned").forEach(workers => {
+        let card = carteWorkerInfo(workers);
+        listeEmployes.append(card)
+      });
+    }else{
+      if(search.length === 0){
+          data.filter(w=>w.currentRoom === "unsigned" && w.role.toLowerCase() === ROLE.toLowerCase()).forEach(workers => {
+            let card = carteWorkerInfo(workers);
+            listeEmployes.append(card)
+          })
+      }else{
+          data.filter(w=>w.currentRoom === "unsigned" && w.role.toLowerCase() === ROLE.toLowerCase()).forEach(workers => {
+            if(workers.nom.toLowerCase().includes(search.toLowerCase())){
+              let card = carteWorkerInfo(workers);
+              listeEmployes.append(card)
+            }
+            
+          })
+      }
+      
+    }
   }
   
   
@@ -304,15 +326,31 @@ function RemplirRoom(listContainer){
     })
     if(index > 1){
       if(containere.children.length === 0){
-        containere.parentElement.classList.add("bg-red-500/20")
-        containere.parentElement.classList.add("hover:bg-red-500/20")
+          containere.parentElement.classList.add("bg-red-500/20")
+          containere.parentElement.classList.add("hover:bg-red-500/20")
       }else{
-        containere.parentElement.classList.remove("bg-red-500/20")
-        containere.parentElement.classList.remove("hover:bg-red-500/20")
+          containere.parentElement.classList.remove("bg-red-500/20")
+          containere.parentElement.classList.remove("hover:bg-red-500/20")
       }
     }
   })
 }
+
+function Filtre(){
+  let listbtn = document.querySelectorAll(".btn-filter")
+  listbtn.forEach(btn=>{
+    btn.addEventListener("click",(event)=>{
+      listbtn.forEach(bttn=>{
+        bttn.classList.remove("bg-amber-600")
+        bttn.classList.remove("bg-slate-800")
+    })
+      btn.classList.add("bg-amber-600")
+      ROLE = btn.dataset.id
+      loadUnsinedWorkers()
+    })
+  })
+}
+Filtre()
 
 filterWorkers(document.getElementById("btn-zone-conference"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"conference")
 filterWorkers(document.getElementById("btn-zone-reception"),["receptionniste","Manager","Nettoyage"],"reception")
