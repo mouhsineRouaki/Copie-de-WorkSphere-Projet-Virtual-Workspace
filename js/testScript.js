@@ -13,6 +13,12 @@ const listeEmployes = document.getElementById('listeEmployes');
 const champRecherche = document.getElementById('champRecherche');
 const listeFiltres = document.getElementById('listeFiltres');
 
+let model = document.getElementById("modalIntegrerWorker")
+let btnFermer = document.getElementById("btnFermerAllWorkers")
+  btnFermer.addEventListener("click",()=>{
+    model.classList.add("hidden")
+  })
+
 
 function getsWorkers() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -93,7 +99,6 @@ function carteWorkerInfo(e) {
   return article
 }
 function carteChangerRoom(e,nouvelleRoom) {
-  let data = getsWorkers();
   let article = document.createElement("article")
   article.setAttribute("class","flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
   article.innerHTML = `
@@ -105,16 +110,17 @@ function carteChangerRoom(e,nouvelleRoom) {
       </div>
   `;
   article.addEventListener('click',()=>{
-    data.find(w=>w.id === e.id).currentRoom = nouvelleRoom
+    let data = getsWorkers();
+    data.find(w=>w.id == e.id).currentRoom = nouvelleRoom
     saveWorkers(data)
-    RemplirRoom(["conference","personel","reception","serveurs","securite","archives"])
+    RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
     loadUnsinedWorkers()
+    article.remove()
   })
   return article
 }
 
 function carteRounded(e) {
-  let data = getsWorkers()
   let article = document.createElement("article")
   let btnDelete = document.createElement("button")
   article.setAttribute("class","relative flex flex-col items-center justify-center gap-3 p-2 rounded  bg-transparent cursor-pointer w-20 h-20 rounded-full")
@@ -126,10 +132,12 @@ function carteRounded(e) {
   article.appendChild(btnDelete)
   btnDelete.addEventListener("click",(event)=>{
     event.stopPropagation()
+    let data = getsWorkers()
     data.find(w=>w.id ===e.id ).currentRoom = "unsigned"
     saveWorkers(data)
-    RemplirRoom(["conference","personel","reception","serveurs","securite","archives"])
+    RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
     loadUnsinedWorkers()
+    article.remove()
   })
   article.addEventListener('click',()=>{
     ouvrirModelDetails(e)
@@ -230,15 +238,11 @@ document.getElementById("btnFermerDetails2").onclick =
 };
 
 function filterWorkers(button ,ListRole, nouvelleRoom){
-  let data = getsWorkers();
   let model = document.getElementById("modalIntegrerWorker")
-  let btnFermer = document.getElementById("btnFermerAllWorkers")
-  btnFermer.addEventListener("click",()=>{
-    model.classList.add("hidden")
-  })
   let container = document.getElementById("contenairWorker")
   
   button.addEventListener("click", ()=>{
+    let data = getsWorkers();
     container.innerHTML = "";
     model.classList.remove("hidden")
     ListRole.forEach(role=>{
@@ -247,8 +251,6 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
       })
     })
   })
-
-
 }
 
 
@@ -256,15 +258,23 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
 
 function RemplirRoom(listContainer){
   let data  =  getsWorkers();
-  listContainer.forEach(container=>{
-    let listFiltrer = data.filter(w=>w.currentRoom === container)
+  listContainer.forEach((container,index)=>{
     let containere = document.getElementById(container)
-    containere.innerHTML
+    containere.innerHTML = ""
+    let listFiltrer = data.filter(w=>w.currentRoom.toLowerCase().trim() === container.toLowerCase().trim())
     listFiltrer.forEach(w=>{
-      containere.appendChild(carteRounded(w))
+      containere.append(carteRounded(w))
     })
+    if(index > 1){
+      if(containere.children.length === 0){
+        containere.parentElement.classList.add("bg-red-500/20")
+      }else{
+        containere.parentElement.classList.remove("bg-red-500/20")
+      }
+    }
   })
 }
+
 filterWorkers(document.getElementById("btn-zone-conference"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"conference")
 filterWorkers(document.getElementById("btn-zone-reception"),["receptionniste","Manager","Nettoyage"],"reception")
 filterWorkers(document.getElementById("btn-zone-serveurs"),["it","Manager","Nettoyage"],"serveurs",)
@@ -274,7 +284,7 @@ filterWorkers(document.getElementById("btn-zone-staff-room"),["receptionniste","
 
 
 
-RemplirRoom(["conference","reception","staffRoom","serveurs","securite","archives"])
+RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
 
 
 
