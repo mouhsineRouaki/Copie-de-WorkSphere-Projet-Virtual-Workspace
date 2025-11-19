@@ -130,7 +130,7 @@ function carteRounded(e) {
   const article = document.createElement("article");
   const btnDelete = document.createElement("button");
 
-  article.className = `relative flex items-center m-2 bg-white shadow-md rounded-xl px-2 py-1 cursor-pointer transition hover:shadow-lg w-fit min-w-[45px] sm:min-w-[60px] lg:min-w-[150px]`;
+  article.className = `relative flex items-center bg-white shadow-md rounded-xl lg:px-2 lg:py-1 cursor-pointer transition hover:shadow-lg w-fit min-w-[7px] sm:min-w-[7px] lg:min-w-[120px]`;
 
   btnDelete.className = ` absolute -top-1.5 -right-1.5 bg-red-500 text-white  w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 flex items-center justify-center  rounded-full  text-[6px] sm:text-[8px] lg:text-[10px] font-bold  hover:bg-red-600 transition`;
   btnDelete.textContent = "X";
