@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'workers';
-const COUNTER_ROOM = 5;
+const LIMIT_ROOM = 5;
 const modal = document.getElementById('modalEmploye');
 const btnOuvrirForm = document.getElementById('btnOuvrirForm');
 const btnFermerForm = document.getElementById('btnFermerForm');
@@ -72,7 +72,7 @@ function creerExperience() {
   `;
 
   // suppression experience
-  experience.querySelector('.btn-supprimer-exp').addEventListener('click', () => bloc.remove());
+  experience.querySelector('.btn-supprimer-exp').addEventListener('click', () => experience.remove());
 
   return experience;
 }
@@ -110,12 +110,18 @@ function carteChangerRoom(e,nouvelleRoom) {
       </div>
   `;
   article.addEventListener('click',()=>{
-    let data = getsWorkers();
-    data.find(w=>w.id == e.id).currentRoom = nouvelleRoom
-    saveWorkers(data)
-    RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
-    loadUnsinedWorkers()
-    article.remove()
+    if(document.getElementById(nouvelleRoom).children.length <= LIMIT_ROOM){
+      let data = getsWorkers();
+      data.find(w=>w.id == e.id).currentRoom = nouvelleRoom
+      saveWorkers(data)
+      RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+      loadUnsinedWorkers()
+      article.remove()
+    }else{
+      alert("roomest bien remplir")
+      model.classList.add("hidden")
+    }
+    
   })
   return article
 }
@@ -125,7 +131,7 @@ function carteRounded(e) {
   let btnDelete = document.createElement("button")
   article.setAttribute("class","relative flex flex-col items-center justify-center gap-3 p-2 rounded  bg-transparent cursor-pointer w-20 h-20 rounded-full")
   btnDelete.setAttribute("class","bg-red-700 text-white rounded-full  h-5 w-5 absolute top-0 right-0")
-  article.textContent = "X"
+  btnDelete.textContent = "X"
   article.innerHTML = `
       <img src="${e.photo}" alt="Photo de ${e.prenom} ${e.nom}" class="h-10 w-10 rounded-full object-cover">
   `;
@@ -207,7 +213,7 @@ function ouvrirModelDetails(worker) {
     document.getElementById("detailsRole").textContent = worker.role;
     document.getElementById("detailsEmail").textContent = worker.email;
     document.getElementById("detailsPhone").textContent = worker.phone;
-
+    document.getElementById("detailsSallonActuel").textContent = worker.currentRoom;
     const expList = document.getElementById("detailsExperiences");
     expList.innerHTML = "";
 
@@ -242,14 +248,19 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
   let container = document.getElementById("contenairWorker")
   
   button.addEventListener("click", ()=>{
-    let data = getsWorkers();
-    container.innerHTML = "";
-    model.classList.remove("hidden")
-    ListRole.forEach(role=>{
-      data.filter(w=>w.role === role && w.currentRoom === "unsigned").forEach(w=>{
-        container.appendChild(carteChangerRoom(w,nouvelleRoom))
-      })
-    })
+    if(document.getElementById(nouvelleRoom).children.length <= LIMIT_ROOM){
+        let data = getsWorkers();
+        container.innerHTML = "";
+        model.classList.remove("hidden")
+        ListRole.forEach(role=>{
+          data.filter(w=>w.role === role && w.currentRoom === "unsigned").forEach(w=>{
+            container.appendChild(carteChangerRoom(w,nouvelleRoom))
+          })
+        })
+    }else{
+      alert("room et complete")
+    }
+      
   })
 }
 
