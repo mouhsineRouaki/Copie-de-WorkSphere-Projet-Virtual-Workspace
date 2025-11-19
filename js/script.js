@@ -201,7 +201,7 @@ form.addEventListener('submit', (e) => {
   const prenom = document.getElementById('prenom').value.trim();
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
-  const photo = document.getElementById('photo').value.trim();
+  const photo = PhotoUser.src
   const role = document.getElementById('role').value.trim();
 
   // recuperation des experiece
@@ -262,9 +262,10 @@ function ouvrirModelDetails(worker) {
     }
 }
 
-document.getElementById("btnFermerDetails").onclick =
-document.getElementById("btnFermerDetails2").onclick =
-() => {
+document.getElementById("btnFermerDetails").onclick =() => {
+    document.getElementById("modalDetailsEmploye").classList.add("hidden");
+};
+document.getElementById("btnFermerDetails2").onclick =() => {
     document.getElementById("modalDetailsEmploye").classList.add("hidden");
 };
 
