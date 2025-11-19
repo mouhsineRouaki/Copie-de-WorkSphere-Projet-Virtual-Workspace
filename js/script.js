@@ -127,15 +127,25 @@ function carteChangerRoom(e,nouvelleRoom) {
 }
 
 function carteRounded(e) {
-  let article = document.createElement("article")
-  let btnDelete = document.createElement("button")
-  article.setAttribute("class","relative flex flex-col items-center justify-center gap-3 p-2 rounded  bg-transparent cursor-pointer w-20 h-20 rounded-full")
-  btnDelete.setAttribute("class","bg-red-700 text-white rounded-full  h-5 w-5 absolute top-0 right-0")
-  btnDelete.textContent = "X"
-  article.innerHTML = `
-      <img src="${e.photo}" alt="Photo de ${e.prenom} ${e.nom}" class="h-10 w-10 rounded-full object-cover">
-  `;
-  article.appendChild(btnDelete)
+  const article = document.createElement("article");
+const btnDelete = document.createElement("button");
+article.className = `relative flex items-center gap-2 bg-white shadow-md rounded-xl px-2 py-1w-fit min-w-[55px] sm:min-w-[80px] lg:min-w-[140px] cursor-pointer transition hover:shadow-lg`;
+btnDelete.className = `absolute -top-1.5 -right-1.5 bg-red-500 text-white w-4 h-4 sm:w-5 sm:h-5flex items-center justify-center rounded-full text-[7px] sm:text-[10px] font-bold hover:bg-red-600 transition`;
+btnDelete.textContent = "X";
+article.innerHTML = `
+  <img src="${e.photo}"
+       alt="Photo de ${e.prenom} ${e.nom}"
+       class="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover shadow">
+
+  <div class="flex-col leading-tight hidden lg:flex">
+    <h2 class="font-semibold text-[10px] text-gray-900">${e.nom}</h2>
+    <p class="text-[8px] text-gray-500">${e.role}</p>
+  </div>
+`;
+
+// ajoute bouton delete
+article.appendChild(btnDelete);
+
   btnDelete.addEventListener("click",(event)=>{
     event.stopPropagation()
     let data = getsWorkers()
