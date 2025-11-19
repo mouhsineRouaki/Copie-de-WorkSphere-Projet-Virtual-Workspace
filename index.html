@@ -135,7 +135,7 @@
         <h2 id="titreForm" class="text-lg font-semibold">Ajouter un employé</h2>
         <button type="button" id="btnFermerForm" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
       </header>
-      <img src="" alt="img" class="w-72 h-72">
+      <img src="./assets/userIcon.webp" id="imageUser" alt="img" class="w-30 h-30 lg:w-72 lg:h-72 md:w-30 md:h-30 rounded-full">
 
       <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -193,7 +193,7 @@
     </form>
   </section>
 
-  <section id="modalDetailsEmploye" class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-60 w-[90%] lg-w-[60%] hidden items-center justify-center bg-black/40">
+  <section id="modalDetailsEmploye" class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-60 w-[90%] lg-w-[60%] flex hidden items-center justify-center bg-transparent">
     <div class="w-full max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
       <div class="flex items-center justify-between">
         <h2 class="text-lg font-semibold" id="titreDetails">Détails de l employé</h2>
@@ -226,15 +226,15 @@
 
     </div>
   </section>
-  <section id="modalIntegrerWorker" class="fixed top-1/2 left-1/2 w-[50%] -translate-y-1/2 -translate-x-1/2  hidden  items-center justify-center">
-    <div class="w-full  max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
+  <section id="modalIntegrerWorker" class="fixed top-1/2 left-1/2 w-100 -translate-y-1/2 -translate-x-1/2  hidden  items-center justify-center">
+    <div class="w-full  max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6 ">
 
       <div class="flex items-center justify-between">
         <h2 class="text-lg font-semibold" id="titreDetails">all wokrkers</h2>
         <button type="button" id="btnFermerAllWorkers" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
       </div>
 
-      <div id="contenairWorker" class="grid grid-cols-2"></div>
+      <div id="contenairWorker" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2"></div>
     </div>
 
     </div>

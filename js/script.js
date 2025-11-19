@@ -12,6 +12,24 @@ const btnAjouterExperience = document.getElementById('btnAjouterExperience');
 const listeEmployes = document.getElementById('listeEmployes');
 const champRecherche = document.getElementById('champRecherche');
 const listeFiltres = document.getElementById('listeFiltres');
+const InputPhoto = document.getElementById('photo');
+const PhotoUser = document.getElementById('imageUser');
+
+InputPhoto.addEventListener("input", () => {
+  const url = InputPhoto.value.trim();
+
+  if (url.lenght === 0) {
+    PhotoUser.src = "./assets/userIcon.webp";
+    return;
+  }
+
+  PhotoUser.src = url;
+
+  PhotoUser.onerror = () => {
+    PhotoUser.src = "./assets/userIcon.webp";
+  };
+});
+
 
 let model = document.getElementById("modalIntegrerWorker")
 let btnFermer = document.getElementById("btnFermerAllWorkers")
