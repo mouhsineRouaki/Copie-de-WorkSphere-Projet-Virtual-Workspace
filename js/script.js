@@ -1,15 +1,75 @@
 const STORAGE_KEY = 'workers';
 const LIMIT_ROOM = 5;
+
 let ROLE = "tous";
+
+
+const patternEmail = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-z]{2,}/;
+const patternNumber = /^(0|\+212)(5|6|7|8)[0-9]{8}$/;
+const patternNomPrenomEntreprise = /^[a-zA-Z]{5,}$/;
+const patternUrl = /^(https?:\/\/)[\w.-]+(\.[\w.-]+)/;
+
+const Inputnom = document.getElementById('nom');
+const Inputprenom = document.getElementById('prenom');
+const Inputemail = document.getElementById('email');
+const Inputphone = document.getElementById('phone');
+const Inputphoto = document.getElementById('photo');
+
+Inputnom.addEventListener('input' , ()=>{
+  if(patternNomPrenomEntreprise.test(Inputnom.value)=== false){
+    Inputnom.nextElementSibling.classList.remove("hidden")
+  }else{
+    Inputnom.nextElementSibling.classList.add("hidden")
+  }
+})
+Inputprenom.addEventListener('input' , ()=>{
+  if(patternNomPrenomEntreprise.test(Inputprenom.value)=== false){
+    Inputprenom.nextElementSibling.classList.remove("hidden")
+  }else{
+    Inputprenom.nextElementSibling.classList.add("hidden")
+  }
+})
+Inputemail.addEventListener('input' , ()=>{
+  if(patternEmail.test(Inputemail.value)=== false){
+    Inputemail.nextElementSibling.classList.remove("hidden")
+  }else{
+    Inputemail.nextElementSibling.classList.add("hidden")
+  }
+})
+Inputphone.addEventListener('input' , ()=>{
+  if(patternNumber.test(Inputphone.value)=== false){
+    Inputphone.nextElementSibling.classList.remove("hidden")
+  }else{
+    Inputphone.nextElementSibling.classList.add("hidden")
+  }
+})
+Inputphoto.addEventListener('input' , ()=>{
+  const url = InputPhoto.value.trim();
+
+  if (url.lenght === 0) {
+    PhotoUser.src = "./assets/userIcon.webp";
+    return;
+  }
+
+  PhotoUser.src = url;
+
+  PhotoUser.onerror = () => {
+    PhotoUser.src = "./assets/userIcon.webp";
+  };
+  if(patternUrl.test(InputPhoto.value)=== false){
+    InputPhoto.nextElementSibling.classList.remove("hidden")
+  }else{
+    InputPhoto.nextElementSibling.classList.add("hidden")
+  }
+})
+
 const modal = document.getElementById('modalEmploye');
 const btnOuvrirForm = document.getElementById('btnOuvrirForm');
 const btnFermerForm = document.getElementById('btnFermerForm');
 const btnAnnuler = document.getElementById('btnAnnuler');
 const form = document.getElementById('formEmploye');
-
 const conteneurExperiences = document.getElementById('conteneurExperiences');
 const btnAjouterExperience = document.getElementById('btnAjouterExperience');
-
 const listeEmployes = document.getElementById('listeEmployes');
 const champRecherche = document.getElementById('champRecherche');
 const listeFiltres = document.getElementById('listeFiltres');
@@ -74,16 +134,19 @@ function creerExperience() {
   experience.innerHTML = `
     <div>
       <label class="block text-xs text-slate-300 mb-1">Entreprise</label>
-      <input type="text" placeholder="Ex : OCP" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
+      <input  type="text" placeholder="Ex : OCP" class="entreprise w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
+      <div class="erreurEtreprise hidden text-[15px] text-red-600">le nom d'entreprise doit etre valid</div>
     </div>
     <div class="grid grid-cols-2 gap-3">
       <div>
         <label class="block text-xs text-slate-300 mb-1">De</label>
-        <input type="date" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
+        <input type="date" class="dateDe w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
+        <div class="erreurDateDe hidden text-[15px] text-red-600">le nom d'entreprise doit etre valid</div>
       </div>
       <div>
         <label class="block text-xs text-slate-300 mb-1">À</label>
         <input type="date" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
+        <div class="erreurDateA hidden text-[15px] text-red-600">le nom d'entreprise doit etre valid</div>
       </div>
     </div>
     <div class="text-right">
@@ -92,6 +155,15 @@ function creerExperience() {
       </button>
     </div>
   `;
+  let exp = experience.querySelector('.entreprise')
+    exp.addEventListener('input', (e) => {
+    if(patternNomPrenomEntreprise.test(e.target.value) === false){
+      exp.nextElementSibling.classList.remove("hidden")
+    }else{
+      exp.nextElementSibling.classList.add("hidden")
+    }
+
+  });
 
   // suppression experience
   experience.querySelector('.btn-supprimer-exp').addEventListener('click', () => experience.remove());
@@ -228,12 +300,19 @@ function loadUnsinedWorkers(search = "") {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
+  let formValid = true;
+
+  const Inputrole = document.getElementById('role')
   const nom = document.getElementById('nom').value.trim();
   const prenom = document.getElementById('prenom').value.trim();
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const photo = PhotoUser.src
-  const role = document.getElementById('role').value.trim();
+  const role = document.getElementById('role').value.trim()
+  if(patternEmail.test(email) === false || patternNumber.test(phone) === false || patternNomPrenomEntreprise.test(nom) === false){
+    console.log(patternEmail.test(email))
+    return
+  }
 
   // recuperation des experiece
   const experiences = [];
@@ -242,6 +321,14 @@ form.addEventListener('submit', (e) => {
     const entreprise = inputs[0].value;
     const de = inputs[1].value;
     const a = inputs[2].value;
+    let dateDebut = new Date(de)
+    let dateFin = new Date(a)
+    if(dateDebut > dateFin){
+        inputs[1].nextElementSibling.classList.remove("hidden")
+        inputs[2].nextElementSibling.classList.remove("hidden")
+        return
+        formValid = false
+    }
     let experiece={
       entreprise:entreprise,
       from:de,
@@ -249,9 +336,14 @@ form.addEventListener('submit', (e) => {
     }
     experiences.push(experiece);
   });
+  
+  if(formValid === false){
+    return
+  }
   let currentRoom = "unsigned"
   let id = Date.now()
   const worker = { id,nom, prenom, email, phone, photo, role, experiences , currentRoom };
+
 
   const data = getsWorkers();
   data.push(worker);
