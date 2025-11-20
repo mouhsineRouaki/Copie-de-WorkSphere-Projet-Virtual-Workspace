@@ -141,12 +141,12 @@ function creerExperience() {
       <div>
         <label class="block text-xs text-slate-300 mb-1">De</label>
         <input type="date" class="dateDe w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
-        <div class="erreurDateDe hidden text-[15px] text-red-600">le nom d'entreprise doit etre valid</div>
+        <div class="erreurDateDe hidden text-[15px] text-red-600">la date de debut doit etre avant date fin</div>
       </div>
       <div>
         <label class="block text-xs text-slate-300 mb-1">À</label>
         <input type="date" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
-        <div class="erreurDateA hidden text-[15px] text-red-600">le nom d'entreprise doit etre valid</div>
+        <div class="erreurDateA hidden text-[15px] text-red-600">la date de fin doit etre apres date debut</div>
       </div>
     </div>
     <div class="text-right">
@@ -326,7 +326,6 @@ form.addEventListener('submit', (e) => {
     if(dateDebut > dateFin){
         inputs[1].nextElementSibling.classList.remove("hidden")
         inputs[2].nextElementSibling.classList.remove("hidden")
-        return
         formValid = false
     }
     let experiece={
@@ -336,7 +335,7 @@ form.addEventListener('submit', (e) => {
     }
     experiences.push(experiece);
   });
-  
+
   if(formValid === false){
     return
   }
