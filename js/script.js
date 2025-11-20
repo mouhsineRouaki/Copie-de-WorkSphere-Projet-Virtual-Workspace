@@ -1,5 +1,3 @@
-
-
 const STORAGE_KEY = 'workers';
 const LIMIT_ROOM = 5;
 
@@ -17,6 +15,23 @@ const Inputemail = document.getElementById('email');
 const Inputphone = document.getElementById('phone');
 const Inputphoto = document.getElementById('photo');
 const btnReset = document.getElementById('resetAllPlace');
+const modal = document.getElementById('modalEmploye');
+const btnOuvrirForm = document.getElementById('btnOuvrirForm');
+const btnFermerForm = document.getElementById('btnFermerForm');
+const btnAnnuler = document.getElementById('btnAnnuler');
+const form = document.getElementById('formEmploye');
+const conteneurExperiences = document.getElementById('conteneurExperiences');
+const btnAjouterExperience = document.getElementById('btnAjouterExperience');
+const listeEmployes = document.getElementById('listeEmployes');
+const champRecherche = document.getElementById('champRecherche');
+const listeFiltres = document.getElementById('listeFiltres');
+const InputPhoto = document.getElementById('photo');
+const PhotoUser = document.getElementById('imageUser');
+const selectRole = document.getElementById('role');
+const model = document.getElementById("modalIntegrerWorker")
+const btnFermer = document.getElementById("btnFermerAllWorkers")
+
+//btn reset pour unsigned tous les workers
 btnReset.addEventListener("click",()=>{
   let data = getsWorkers()
   data.forEach(worker=>{
@@ -27,6 +42,7 @@ btnReset.addEventListener("click",()=>{
   loadUnsinedWorkers()
 })
 
+//listener pour validation regex 
 Inputnom.addEventListener('input' , ()=>{
   if(patternNomPrenomEntreprise.test(Inputnom.value)=== false){
     Inputnom.nextElementSibling.classList.remove("hidden")
@@ -75,20 +91,8 @@ Inputphoto.addEventListener('input' , ()=>{
   }
 })
 
-const modal = document.getElementById('modalEmploye');
-const btnOuvrirForm = document.getElementById('btnOuvrirForm');
-const btnFermerForm = document.getElementById('btnFermerForm');
-const btnAnnuler = document.getElementById('btnAnnuler');
-const form = document.getElementById('formEmploye');
-const conteneurExperiences = document.getElementById('conteneurExperiences');
-const btnAjouterExperience = document.getElementById('btnAjouterExperience');
-const listeEmployes = document.getElementById('listeEmployes');
-const champRecherche = document.getElementById('champRecherche');
-const listeFiltres = document.getElementById('listeFiltres');
-const InputPhoto = document.getElementById('photo');
-const PhotoUser = document.getElementById('imageUser');
-const selectRole = document.getElementById('role');
 
+//fetch les donner de roles.json et afficher dans select des roles 
 fetch("../data/roles.json")
 .then(res => res.json())
 .then(data=>{
@@ -102,32 +106,15 @@ fetch("../data/roles.json")
   })
 })
 
-
+//listener recherche 
 champRecherche.addEventListener('input' , ()=>{
   loadUnsinedWorkers(champRecherche.value)
 })
 
-InputPhoto.addEventListener("input", () => {
-  const url = InputPhoto.value.trim();
-
-  if (url.lenght === 0) {
-    PhotoUser.src = "./assets/userIcon.webp";
-    return;
-  }
-
-  PhotoUser.src = url;
-
-  PhotoUser.onerror = () => {
-    PhotoUser.src = "./assets/userIcon.webp";
-  };
-});
-
-
-let model = document.getElementById("modalIntegrerWorker")
-let btnFermer = document.getElementById("btnFermerAllWorkers")
-  btnFermer.addEventListener("click",()=>{
+//listener pour fermner le button list all worker
+btnFermer.addEventListener("click",()=>{
     model.classList.add("hidden")
-  })
+})
 
 
 function getsWorkers() {
@@ -150,11 +137,12 @@ function fermerModal() {
   conteneurExperiences.innerHTML = '';
 }
 
+//des listener pour ouvrir et fermer model dajout 
 btnOuvrirForm.addEventListener('click', ouvrirModal);
 btnFermerForm.addEventListener('click', fermerModal);
 btnAnnuler.addEventListener('click', fermerModal);
 
-
+//function creer experience 
 function creerExperience() {
   const experience = document.createElement('div');
   experience.className = 'p-3 bg-slate-800/60 rounded space-y-2 experience';
@@ -183,14 +171,14 @@ function creerExperience() {
       </button>
     </div>
   `;
+  //validation de champs demtreprise
   let exp = experience.querySelector('.entreprise')
-    exp.addEventListener('input', (e) => {
+  exp.addEventListener('input', (e) => {
     if(patternNomPrenomEntreprise.test(e.target.value) === false){
       exp.nextElementSibling.classList.remove("hidden")
     }else{
       exp.nextElementSibling.classList.add("hidden")
     }
-
   });
 
   // suppression experience
@@ -199,11 +187,12 @@ function creerExperience() {
   return experience;
 }
 
+//listener pour lajout dexperience
 btnAjouterExperience.addEventListener('click', () => {
   conteneurExperiences.appendChild(creerExperience());
 });
 
-
+//creation un carte pour les info (unsined worker)
 function carteWorkerInfo(e) {
   let article = document.createElement("article")
   article.setAttribute("class","flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
@@ -220,6 +209,7 @@ function carteWorkerInfo(e) {
   })
   return article
 }
+//creation carte pour changer sa room 
 function carteChangerRoom(e,nouvelleRoom) {
   let article = document.createElement("article")
   article.setAttribute("class","flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
@@ -248,6 +238,7 @@ function carteChangerRoom(e,nouvelleRoom) {
   return article
 }
 
+//creation cartepour responsive et  pour remove changer sa romm to unsigned
 function carteRounded(e) {
   const article = document.createElement("article");
   const btnDelete = document.createElement("button");
@@ -280,7 +271,7 @@ function carteRounded(e) {
   return article
 }
 
-
+//function pour load all worker qui en unsigned and recherche et filter
 function loadUnsinedWorkers(search = "") {
   const data = getsWorkers();
   listeEmployes.innerHTML ="";
@@ -324,19 +315,20 @@ function loadUnsinedWorkers(search = "") {
 }
 
 
-
+//formpour lejout dun worker 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   let formValid = true;
+
   const nom = document.getElementById('nom').value.trim();
   const prenom = document.getElementById('prenom').value.trim();
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const photo = PhotoUser.src
   const role = document.getElementById('role').value.trim()
-  if(patternEmail.test(email) === false || patternNumber.test(phone) === false || patternNomPrenomEntreprise.test(nom) === false){
-    console.log(patternEmail.test(email))
+
+  if(patternEmail.test(email) === false || patternNumber.test(phone) === false || patternNomPrenomEntreprise.test(prenom) === false || patternEmail.test(email) === false || patternUrl.test(patternUrl) === false){
     return
   }
 
@@ -357,11 +349,9 @@ form.addEventListener('submit', (e) => {
       inputs[1].nextElementSibling.classList.add("hidden")
         inputs[2].nextElementSibling.classList.add("hidden")
     }
-    let experiece={
-      entreprise:entreprise,
-      from:de,
-      to:a
-    }
+
+    let experiece={entreprise:entreprise,from:de,to:a}
+
     experiences.push(experiece);
   });
 
@@ -382,7 +372,6 @@ form.addEventListener('submit', (e) => {
 });
 function ouvrirModelDetails(worker) {
     document.getElementById("modalDetailsEmploye").classList.remove("hidden");
-
     document.getElementById("detailsPhoto").src = worker.photo;
     document.getElementById("detailsNom").textContent = worker.nom;
     document.getElementById("detailsPrenom").textContent = worker.prenom;
@@ -390,6 +379,7 @@ function ouvrirModelDetails(worker) {
     document.getElementById("detailsEmail").textContent = worker.email;
     document.getElementById("detailsPhone").textContent = worker.phone;
     document.getElementById("detailsSallonActuel").textContent = worker.currentRoom;
+
     const expList = document.getElementById("detailsExperiences");
     expList.innerHTML = "";
 
@@ -412,7 +402,7 @@ function ouvrirModelDetails(worker) {
         expList.innerHTML = "<li>Aucune expérience renseignée.</li>";
     }
 }
-
+//fermeture de model details
 document.getElementById("btnFermerDetails").onclick =() => {
     document.getElementById("modalDetailsEmploye").classList.add("hidden");
 };
@@ -420,6 +410,7 @@ document.getElementById("btnFermerDetails2").onclick =() => {
     document.getElementById("modalDetailsEmploye").classList.add("hidden");
 };
 
+//pour filtrer les workers selon le room
 function filterWorkers(button ,ListRole, nouvelleRoom){
   let model = document.getElementById("modalIntegrerWorker")
   let container = document.getElementById("contenairWorker")
@@ -441,9 +432,7 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
   })
 }
 
-
-
-
+//pour realod les workers in rooms
 function RemplirRoom(listContainer){
   let data  =  getsWorkers();
   listContainer.forEach((container,index)=>{
@@ -465,22 +454,24 @@ function RemplirRoom(listContainer){
   })
 }
 
+//pour filtrer les workers a partir les button de filtre
 function Filtre(){
   let listbtn = document.querySelectorAll(".btn-filter")
   listbtn.forEach(btn=>{
-    btn.addEventListener("click",(event)=>{
+    btn.addEventListener("click",()=>{
       listbtn.forEach(bttn=>{
         bttn.classList.remove("bg-amber-600")
         bttn.classList.remove("bg-slate-800")
     })
       btn.classList.add("bg-amber-600")
       ROLE = btn.dataset.id
-      console.log(btn.dataset.id)
       loadUnsinedWorkers()
     })
   })
 }
+
 Filtre()
+
 
 filterWorkers(document.getElementById("btn-zone-conference"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"conference")
 filterWorkers(document.getElementById("btn-zone-reception"),["receptionniste","Manager","Nettoyage"],"reception")
@@ -489,10 +480,6 @@ filterWorkers(document.getElementById("btn-zone-securite"),["Manager","securite"
 filterWorkers(document.getElementById("btn-zone-archives"),["Manager"],"archives")
 filterWorkers(document.getElementById("btn-zone-staff-room"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"staffRoom")
 
-
-
 RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
-
-
 
 loadUnsinedWorkers();
