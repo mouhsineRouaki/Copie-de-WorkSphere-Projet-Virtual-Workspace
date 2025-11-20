@@ -188,10 +188,19 @@ function loadUnsinedWorkers(search = "") {
     listeEmployes.innerHTML =`<p class="text-sm text-slate-400">Aucun workers.</p>`;
   }else{
     if(ROLE === "tous"){
-      data.filter(w=>w.currentRoom === "unsigned").forEach(workers => {
-        let card = carteWorkerInfo(workers);
-        listeEmployes.append(card)
-      });
+      if(search.length === 0){
+        data.filter(w=>w.currentRoom === "unsigned").forEach(workers => {
+          let card = carteWorkerInfo(workers);
+          listeEmployes.append(card)
+        })
+      }else{
+        data.filter(w=>w.currentRoom === "unsigned").forEach(workers => {
+          if(workers.nom.toLowerCase().includes(search.toLowerCase())||workers.prenom.toLowerCase().includes(search.toLowerCase())){
+              let card = carteWorkerInfo(workers);
+              listeEmployes.append(card)
+          }
+        })
+      }
     }else{
       if(search.length === 0){
           data.filter(w=>w.currentRoom === "unsigned" && w.role.toLowerCase() === ROLE.toLowerCase()).forEach(workers => {
@@ -200,7 +209,7 @@ function loadUnsinedWorkers(search = "") {
           })
       }else{
           data.filter(w=>w.currentRoom === "unsigned" && w.role.toLowerCase() === ROLE.toLowerCase()).forEach(workers => {
-            if(workers.nom.toLowerCase().includes(search.toLowerCase())){
+            if(workers.nom.toLowerCase().includes(search.toLowerCase())||workers.prenom.toLowerCase().includes(search.toLowerCase())){
               let card = carteWorkerInfo(workers);
               listeEmployes.append(card)
             }
@@ -346,6 +355,7 @@ function Filtre(){
     })
       btn.classList.add("bg-amber-600")
       ROLE = btn.dataset.id
+      console.log(btn.dataset.id)
       loadUnsinedWorkers()
     })
   })
