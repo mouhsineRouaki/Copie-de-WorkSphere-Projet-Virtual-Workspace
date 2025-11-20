@@ -410,7 +410,7 @@ document.getElementById("btnFermerDetails2").onclick =() => {
     document.getElementById("modalDetailsEmploye").classList.add("hidden");
 };
 
-//pour filtrer
+//pour filtrer les workers selon le room
 function filterWorkers(button ,ListRole, nouvelleRoom){
   let model = document.getElementById("modalIntegrerWorker")
   let container = document.getElementById("contenairWorker")
@@ -432,9 +432,7 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
   })
 }
 
-
-
-
+//pour realod les workers in rooms
 function RemplirRoom(listContainer){
   let data  =  getsWorkers();
   listContainer.forEach((container,index)=>{
@@ -456,22 +454,24 @@ function RemplirRoom(listContainer){
   })
 }
 
+//pour filtrer les workers a partir les button de filtre
 function Filtre(){
   let listbtn = document.querySelectorAll(".btn-filter")
   listbtn.forEach(btn=>{
-    btn.addEventListener("click",(event)=>{
+    btn.addEventListener("click",()=>{
       listbtn.forEach(bttn=>{
         bttn.classList.remove("bg-amber-600")
         bttn.classList.remove("bg-slate-800")
     })
       btn.classList.add("bg-amber-600")
       ROLE = btn.dataset.id
-      console.log(btn.dataset.id)
       loadUnsinedWorkers()
     })
   })
 }
+
 Filtre()
+
 
 filterWorkers(document.getElementById("btn-zone-conference"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"conference")
 filterWorkers(document.getElementById("btn-zone-reception"),["receptionniste","Manager","Nettoyage"],"reception")
@@ -480,10 +480,6 @@ filterWorkers(document.getElementById("btn-zone-securite"),["Manager","securite"
 filterWorkers(document.getElementById("btn-zone-archives"),["Manager"],"archives")
 filterWorkers(document.getElementById("btn-zone-staff-room"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"staffRoom")
 
-
-
 RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
-
-
 
 loadUnsinedWorkers();
