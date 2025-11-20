@@ -1,5 +1,3 @@
-
-
 const STORAGE_KEY = 'workers';
 const LIMIT_ROOM = 5;
 
@@ -17,6 +15,23 @@ const Inputemail = document.getElementById('email');
 const Inputphone = document.getElementById('phone');
 const Inputphoto = document.getElementById('photo');
 const btnReset = document.getElementById('resetAllPlace');
+const modal = document.getElementById('modalEmploye');
+const btnOuvrirForm = document.getElementById('btnOuvrirForm');
+const btnFermerForm = document.getElementById('btnFermerForm');
+const btnAnnuler = document.getElementById('btnAnnuler');
+const form = document.getElementById('formEmploye');
+const conteneurExperiences = document.getElementById('conteneurExperiences');
+const btnAjouterExperience = document.getElementById('btnAjouterExperience');
+const listeEmployes = document.getElementById('listeEmployes');
+const champRecherche = document.getElementById('champRecherche');
+const listeFiltres = document.getElementById('listeFiltres');
+const InputPhoto = document.getElementById('photo');
+const PhotoUser = document.getElementById('imageUser');
+const selectRole = document.getElementById('role');
+const model = document.getElementById("modalIntegrerWorker")
+const btnFermer = document.getElementById("btnFermerAllWorkers")
+
+//btn reset pour unsigned tous les workers
 btnReset.addEventListener("click",()=>{
   let data = getsWorkers()
   data.forEach(worker=>{
@@ -27,6 +42,7 @@ btnReset.addEventListener("click",()=>{
   loadUnsinedWorkers()
 })
 
+//listener pour validation regex 
 Inputnom.addEventListener('input' , ()=>{
   if(patternNomPrenomEntreprise.test(Inputnom.value)=== false){
     Inputnom.nextElementSibling.classList.remove("hidden")
@@ -75,20 +91,8 @@ Inputphoto.addEventListener('input' , ()=>{
   }
 })
 
-const modal = document.getElementById('modalEmploye');
-const btnOuvrirForm = document.getElementById('btnOuvrirForm');
-const btnFermerForm = document.getElementById('btnFermerForm');
-const btnAnnuler = document.getElementById('btnAnnuler');
-const form = document.getElementById('formEmploye');
-const conteneurExperiences = document.getElementById('conteneurExperiences');
-const btnAjouterExperience = document.getElementById('btnAjouterExperience');
-const listeEmployes = document.getElementById('listeEmployes');
-const champRecherche = document.getElementById('champRecherche');
-const listeFiltres = document.getElementById('listeFiltres');
-const InputPhoto = document.getElementById('photo');
-const PhotoUser = document.getElementById('imageUser');
-const selectRole = document.getElementById('role');
 
+//fetch les donner de roles.json et afficher dans select des roles 
 fetch("../data/roles.json")
 .then(res => res.json())
 .then(data=>{
@@ -102,32 +106,15 @@ fetch("../data/roles.json")
   })
 })
 
-
+//listener recherche 
 champRecherche.addEventListener('input' , ()=>{
   loadUnsinedWorkers(champRecherche.value)
 })
 
-InputPhoto.addEventListener("input", () => {
-  const url = InputPhoto.value.trim();
-
-  if (url.lenght === 0) {
-    PhotoUser.src = "./assets/userIcon.webp";
-    return;
-  }
-
-  PhotoUser.src = url;
-
-  PhotoUser.onerror = () => {
-    PhotoUser.src = "./assets/userIcon.webp";
-  };
-});
-
-
-let model = document.getElementById("modalIntegrerWorker")
-let btnFermer = document.getElementById("btnFermerAllWorkers")
-  btnFermer.addEventListener("click",()=>{
+//listener pour fermner le button list all worker
+btnFermer.addEventListener("click",()=>{
     model.classList.add("hidden")
-  })
+})
 
 
 function getsWorkers() {
