@@ -353,6 +353,9 @@ form.addEventListener('submit', (e) => {
         inputs[1].nextElementSibling.classList.remove("hidden")
         inputs[2].nextElementSibling.classList.remove("hidden")
         formValid = false
+    }else{
+      inputs[1].nextElementSibling.classList.add("hidden")
+        inputs[2].nextElementSibling.classList.add("hidden")
     }
     let experiece={
       entreprise:entreprise,
