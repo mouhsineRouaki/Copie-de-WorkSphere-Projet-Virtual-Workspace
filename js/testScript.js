@@ -1,127 +1,17 @@
-
-
 const STORAGE_KEY = 'workers';
 const LIMIT_ROOM = 5;
-
-let ROLE = "tous";
-
-
-const patternEmail = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-z]{2,}/;
-const patternNumber = /^(0|\+212)(5|6|7|8)[0-9]{8}$/;
-const patternNomPrenomEntreprise = /^[a-zA-Z]{5,}$/;
-const patternUrl = /^(https?:\/\/)[\w.-]+(\.[\w.-]+)/;
-
-const Inputnom = document.getElementById('nom');
-const Inputprenom = document.getElementById('prenom');
-const Inputemail = document.getElementById('email');
-const Inputphone = document.getElementById('phone');
-const Inputphoto = document.getElementById('photo');
-const btnReset = document.getElementById('resetAllPlace');
-btnReset.addEventListener("click",()=>{
-  let data = getsWorkers()
-  data.forEach(worker=>{
-    worker.currentRoom = "unsigned"
-  })
-  saveWorkers(data)
-  RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
-  loadUnsinedWorkers()
-})
-
-Inputnom.addEventListener('input' , ()=>{
-  if(patternNomPrenomEntreprise.test(Inputnom.value)=== false){
-    Inputnom.nextElementSibling.classList.remove("hidden")
-  }else{
-    Inputnom.nextElementSibling.classList.add("hidden")
-  }
-})
-Inputprenom.addEventListener('input' , ()=>{
-  if(patternNomPrenomEntreprise.test(Inputprenom.value)=== false){
-    Inputprenom.nextElementSibling.classList.remove("hidden")
-  }else{
-    Inputprenom.nextElementSibling.classList.add("hidden")
-  }
-})
-Inputemail.addEventListener('input' , ()=>{
-  if(patternEmail.test(Inputemail.value)=== false){
-    Inputemail.nextElementSibling.classList.remove("hidden")
-  }else{
-    Inputemail.nextElementSibling.classList.add("hidden")
-  }
-})
-Inputphone.addEventListener('input' , ()=>{
-  if(patternNumber.test(Inputphone.value)=== false){
-    Inputphone.nextElementSibling.classList.remove("hidden")
-  }else{
-    Inputphone.nextElementSibling.classList.add("hidden")
-  }
-})
-Inputphoto.addEventListener('input' , ()=>{
-  const url = InputPhoto.value.trim();
-
-  if (url.lenght === 0) {
-    PhotoUser.src = "./assets/userIcon.webp";
-    return;
-  }
-
-  PhotoUser.src = url;
-
-  PhotoUser.onerror = () => {
-    PhotoUser.src = "./assets/userIcon.webp";
-  };
-  if(patternUrl.test(InputPhoto.value)=== false){
-    InputPhoto.nextElementSibling.classList.remove("hidden")
-  }else{
-    InputPhoto.nextElementSibling.classList.add("hidden")
-  }
-})
-
 const modal = document.getElementById('modalEmploye');
 const btnOuvrirForm = document.getElementById('btnOuvrirForm');
 const btnFermerForm = document.getElementById('btnFermerForm');
 const btnAnnuler = document.getElementById('btnAnnuler');
 const form = document.getElementById('formEmploye');
+
 const conteneurExperiences = document.getElementById('conteneurExperiences');
 const btnAjouterExperience = document.getElementById('btnAjouterExperience');
+
 const listeEmployes = document.getElementById('listeEmployes');
 const champRecherche = document.getElementById('champRecherche');
 const listeFiltres = document.getElementById('listeFiltres');
-const InputPhoto = document.getElementById('photo');
-const PhotoUser = document.getElementById('imageUser');
-const selectRole = document.getElementById('role');
-
-fetch("../data/roles.json")
-.then(res => res.json())
-.then(data=>{
-  data.forEach(r=>{
-    let option = document.createElement("option")
-    option.setAttribute("value", r)
-    option.setAttribute("class", "bg-slate-900")
-
-    option.textContent = r
-    selectRole.appendChild(option)
-  })
-})
-
-
-champRecherche.addEventListener('input' , ()=>{
-  loadUnsinedWorkers(champRecherche.value)
-})
-
-InputPhoto.addEventListener("input", () => {
-  const url = InputPhoto.value.trim();
-
-  if (url.lenght === 0) {
-    PhotoUser.src = "./assets/userIcon.webp";
-    return;
-  }
-
-  PhotoUser.src = url;
-
-  PhotoUser.onerror = () => {
-    PhotoUser.src = "./assets/userIcon.webp";
-  };
-});
-
 
 let model = document.getElementById("modalIntegrerWorker")
 let btnFermer = document.getElementById("btnFermerAllWorkers")
@@ -162,19 +52,16 @@ function creerExperience() {
   experience.innerHTML = `
     <div>
       <label class="block text-xs text-slate-300 mb-1">Entreprise</label>
-      <input  type="text" placeholder="Ex : OCP" class="entreprise w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
-      <div class="erreurEtreprise hidden text-[15px] text-red-600">le nom d'entreprise doit etre valid</div>
+      <input type="text" placeholder="Ex : OCP" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
     </div>
     <div class="grid grid-cols-2 gap-3">
       <div>
         <label class="block text-xs text-slate-300 mb-1">De</label>
-        <input type="date" class="dateDe w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
-        <div class="erreurDateDe hidden text-[15px] text-red-600">la date de debut doit etre avant date fin</div>
+        <input type="date" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
       </div>
       <div>
         <label class="block text-xs text-slate-300 mb-1">À</label>
         <input type="date" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500" />
-        <div class="erreurDateA hidden text-[15px] text-red-600">la date de fin doit etre apres date debut</div>
       </div>
     </div>
     <div class="text-right">
@@ -183,15 +70,6 @@ function creerExperience() {
       </button>
     </div>
   `;
-  let exp = experience.querySelector('.entreprise')
-    exp.addEventListener('input', (e) => {
-    if(patternNomPrenomEntreprise.test(e.target.value) === false){
-      exp.nextElementSibling.classList.remove("hidden")
-    }else{
-      exp.nextElementSibling.classList.add("hidden")
-    }
-
-  });
 
   // suppression experience
   experience.querySelector('.btn-supprimer-exp').addEventListener('click', () => experience.remove());
@@ -249,22 +127,15 @@ function carteChangerRoom(e,nouvelleRoom) {
 }
 
 function carteRounded(e) {
-  const article = document.createElement("article");
-  const btnDelete = document.createElement("button");
-
-  article.className = `relative flex items-center bg-white shadow-md rounded-xl lg:px-2 lg:py-1 cursor-pointer transition hover:shadow-lg w-fit min-w-[7px] sm:min-w-[7px] lg:min-w-[120px]`;
-
-  btnDelete.className = ` absolute -top-1.5 -right-1.5 bg-red-500 text-white  w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 flex items-center justify-center  rounded-full  text-[6px] sm:text-[8px] lg:text-[10px] font-bold  hover:bg-red-600 transition`;
-  btnDelete.textContent = "X";
-
+  let article = document.createElement("article")
+  let btnDelete = document.createElement("button")
+  article.setAttribute("class","relative flex flex-col items-center justify-center gap-3 p-2 rounded  bg-transparent cursor-pointer w-20 h-20 rounded-full")
+  btnDelete.setAttribute("class","bg-red-700 text-white rounded-full  h-5 w-5 absolute top-0 right-0")
+  btnDelete.textContent = "X"
   article.innerHTML = `
-    <img src="${e.photo}" alt="Photo de ${e.prenom} ${e.nom}" class="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover shadow">
-    <div class="hidden lg:flex flex-col leading-tight">
-      <h2 class="font-semibold text-[12px] truncate max-w-[10ch] text-gray-900">${e.nom}</h2>
-      <p class="text-[10px]  text-gray-500">${e.role}</p>
-    </div>
+      <img src="${e.photo}" alt="Photo de ${e.prenom} ${e.nom}" class="h-10 w-10 rounded-full object-cover">
   `;
-  article.appendChild(btnDelete);
+  article.appendChild(btnDelete)
   btnDelete.addEventListener("click",(event)=>{
     event.stopPropagation()
     let data = getsWorkers()
@@ -281,43 +152,16 @@ function carteRounded(e) {
 }
 
 
-function loadUnsinedWorkers(search = "") {
+function loadUnsinedWorkers() {
   const data = getsWorkers();
   listeEmployes.innerHTML ="";
   if(data.lenght === 0){
     listeEmployes.innerHTML =`<p class="text-sm text-slate-400">Aucun workers.</p>`;
   }else{
-    if(ROLE === "tous"){
-      if(search.length === 0){
-        data.filter(w=>w.currentRoom === "unsigned").forEach(workers => {
-          let card = carteWorkerInfo(workers);
-          listeEmployes.append(card)
-        })
-      }else{
-        data.filter(w=>w.currentRoom === "unsigned").forEach(workers => {
-          if(workers.nom.toLowerCase().includes(search.toLowerCase())||workers.prenom.toLowerCase().includes(search.toLowerCase())){
-              let card = carteWorkerInfo(workers);
-              listeEmployes.append(card)
-          }
-        })
-      }
-    }else{
-      if(search.length === 0){
-          data.filter(w=>w.currentRoom === "unsigned" && w.role.toLowerCase() === ROLE.toLowerCase()).forEach(workers => {
-            let card = carteWorkerInfo(workers);
-            listeEmployes.append(card)
-          })
-      }else{
-          data.filter(w=>w.currentRoom === "unsigned" && w.role.toLowerCase() === ROLE.toLowerCase()).forEach(workers => {
-            if(workers.nom.toLowerCase().includes(search.toLowerCase())||workers.prenom.toLowerCase().includes(search.toLowerCase())){
-              let card = carteWorkerInfo(workers);
-              listeEmployes.append(card)
-            }
-            
-          })
-      }
-      
-    }
+    data.filter(w=>w.currentRoom === "unsigned").forEach(workers => {
+       let card = carteWorkerInfo(workers);
+       listeEmployes.append(card)
+    });
   }
   
   
@@ -328,17 +172,12 @@ function loadUnsinedWorkers(search = "") {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  let formValid = true;
   const nom = document.getElementById('nom').value.trim();
   const prenom = document.getElementById('prenom').value.trim();
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
-  const photo = PhotoUser.src
-  const role = document.getElementById('role').value.trim()
-  if(patternEmail.test(email) === false || patternNumber.test(phone) === false || patternNomPrenomEntreprise.test(nom) === false){
-    console.log(patternEmail.test(email))
-    return
-  }
+  const photo = document.getElementById('photo').value.trim();
+  const role = document.getElementById('role').value.trim();
 
   // recuperation des experiece
   const experiences = [];
@@ -347,16 +186,6 @@ form.addEventListener('submit', (e) => {
     const entreprise = inputs[0].value;
     const de = inputs[1].value;
     const a = inputs[2].value;
-    let dateDebut = new Date(de)
-    let dateFin = new Date(a)
-    if(dateDebut > dateFin){
-        inputs[1].nextElementSibling.classList.remove("hidden")
-        inputs[2].nextElementSibling.classList.remove("hidden")
-        formValid = false
-    }else{
-      inputs[1].nextElementSibling.classList.add("hidden")
-        inputs[2].nextElementSibling.classList.add("hidden")
-    }
     let experiece={
       entreprise:entreprise,
       from:de,
@@ -364,14 +193,9 @@ form.addEventListener('submit', (e) => {
     }
     experiences.push(experiece);
   });
-
-  if(formValid === false){
-    return
-  }
   let currentRoom = "unsigned"
   let id = Date.now()
   const worker = { id,nom, prenom, email, phone, photo, role, experiences , currentRoom };
-
 
   const data = getsWorkers();
   data.push(worker);
@@ -413,10 +237,9 @@ function ouvrirModelDetails(worker) {
     }
 }
 
-document.getElementById("btnFermerDetails").onclick =() => {
-    document.getElementById("modalDetailsEmploye").classList.add("hidden");
-};
-document.getElementById("btnFermerDetails2").onclick =() => {
+document.getElementById("btnFermerDetails").onclick =
+document.getElementById("btnFermerDetails2").onclick =
+() => {
     document.getElementById("modalDetailsEmploye").classList.add("hidden");
 };
 
@@ -430,7 +253,7 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
         container.innerHTML = "";
         model.classList.remove("hidden")
         ListRole.forEach(role=>{
-          data.filter(w=>w.role.toLowerCase() === role.toLowerCase() && w.currentRoom === "unsigned").forEach(w=>{
+          data.filter(w=>w.role === role && w.currentRoom === "unsigned").forEach(w=>{
             container.appendChild(carteChangerRoom(w,nouvelleRoom))
           })
         })
@@ -455,32 +278,13 @@ function RemplirRoom(listContainer){
     })
     if(index > 1){
       if(containere.children.length === 0){
-          containere.parentElement.classList.add("bg-red-500/20")
-          containere.parentElement.classList.add("hover:bg-red-500/20")
+        containere.parentElement.classList.add("bg-red-500/20")
       }else{
-          containere.parentElement.classList.remove("bg-red-500/20")
-          containere.parentElement.classList.remove("hover:bg-red-500/20")
+        containere.parentElement.classList.remove("bg-red-500/20")
       }
     }
   })
 }
-
-function Filtre(){
-  let listbtn = document.querySelectorAll(".btn-filter")
-  listbtn.forEach(btn=>{
-    btn.addEventListener("click",(event)=>{
-      listbtn.forEach(bttn=>{
-        bttn.classList.remove("bg-amber-600")
-        bttn.classList.remove("bg-slate-800")
-    })
-      btn.classList.add("bg-amber-600")
-      ROLE = btn.dataset.id
-      console.log(btn.dataset.id)
-      loadUnsinedWorkers()
-    })
-  })
-}
-Filtre()
 
 filterWorkers(document.getElementById("btn-zone-conference"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"conference")
 filterWorkers(document.getElementById("btn-zone-reception"),["receptionniste","Manager","Nettoyage"],"reception")
