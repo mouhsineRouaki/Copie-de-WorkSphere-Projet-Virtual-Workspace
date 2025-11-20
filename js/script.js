@@ -1,3 +1,5 @@
+
+
 const STORAGE_KEY = 'workers';
 const LIMIT_ROOM = 5;
 
@@ -14,6 +16,16 @@ const Inputprenom = document.getElementById('prenom');
 const Inputemail = document.getElementById('email');
 const Inputphone = document.getElementById('phone');
 const Inputphoto = document.getElementById('photo');
+const btnReset = document.getElementById('resetAllPlace');
+btnReset.addEventListener("click",()=>{
+  let data = getsWorkers()
+  data.forEach(worker=>{
+    worker.currentRoom = "unsigned"
+  })
+  saveWorkers(data)
+  RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+  loadUnsinedWorkers()
+})
 
 Inputnom.addEventListener('input' , ()=>{
   if(patternNomPrenomEntreprise.test(Inputnom.value)=== false){
@@ -75,6 +87,22 @@ const champRecherche = document.getElementById('champRecherche');
 const listeFiltres = document.getElementById('listeFiltres');
 const InputPhoto = document.getElementById('photo');
 const PhotoUser = document.getElementById('imageUser');
+const selectRole = document.getElementById('role');
+
+fetch("../data/roles.json")
+.then(res => res.json())
+.then(data=>{
+  data.forEach(r=>{
+    let option = document.createElement("option")
+    option.setAttribute("value", r)
+    option.setAttribute("class", "bg-slate-900")
+
+    option.textContent = r
+    selectRole.appendChild(option)
+  })
+})
+
+
 champRecherche.addEventListener('input' , ()=>{
   loadUnsinedWorkers(champRecherche.value)
 })
