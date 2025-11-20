@@ -137,11 +137,12 @@ function fermerModal() {
   conteneurExperiences.innerHTML = '';
 }
 
+//des listener pour ouvrir et fermer model dajout 
 btnOuvrirForm.addEventListener('click', ouvrirModal);
 btnFermerForm.addEventListener('click', fermerModal);
 btnAnnuler.addEventListener('click', fermerModal);
 
-
+//function creer experience 
 function creerExperience() {
   const experience = document.createElement('div');
   experience.className = 'p-3 bg-slate-800/60 rounded space-y-2 experience';
@@ -170,14 +171,14 @@ function creerExperience() {
       </button>
     </div>
   `;
+  //validation de champs demtreprise
   let exp = experience.querySelector('.entreprise')
-    exp.addEventListener('input', (e) => {
+  exp.addEventListener('input', (e) => {
     if(patternNomPrenomEntreprise.test(e.target.value) === false){
       exp.nextElementSibling.classList.remove("hidden")
     }else{
       exp.nextElementSibling.classList.add("hidden")
     }
-
   });
 
   // suppression experience
@@ -186,11 +187,12 @@ function creerExperience() {
   return experience;
 }
 
+//listener pour lajout dexperience
 btnAjouterExperience.addEventListener('click', () => {
   conteneurExperiences.appendChild(creerExperience());
 });
 
-
+//creation un carte pour les info (unsined worker)
 function carteWorkerInfo(e) {
   let article = document.createElement("article")
   article.setAttribute("class","flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
@@ -207,6 +209,7 @@ function carteWorkerInfo(e) {
   })
   return article
 }
+//creation carte pour changer sa room 
 function carteChangerRoom(e,nouvelleRoom) {
   let article = document.createElement("article")
   article.setAttribute("class","flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
@@ -235,6 +238,7 @@ function carteChangerRoom(e,nouvelleRoom) {
   return article
 }
 
+//creation cartepour responsive et  pour remove changer sa romm to unsigned
 function carteRounded(e) {
   const article = document.createElement("article");
   const btnDelete = document.createElement("button");
@@ -267,7 +271,7 @@ function carteRounded(e) {
   return article
 }
 
-
+//function pour load all worker qui en unsigned and recherche et filter
 function loadUnsinedWorkers(search = "") {
   const data = getsWorkers();
   listeEmployes.innerHTML ="";
@@ -311,19 +315,20 @@ function loadUnsinedWorkers(search = "") {
 }
 
 
-
+//formpour lejout dun worker 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   let formValid = true;
+
   const nom = document.getElementById('nom').value.trim();
   const prenom = document.getElementById('prenom').value.trim();
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const photo = PhotoUser.src
   const role = document.getElementById('role').value.trim()
-  if(patternEmail.test(email) === false || patternNumber.test(phone) === false || patternNomPrenomEntreprise.test(nom) === false){
-    console.log(patternEmail.test(email))
+
+  if(patternEmail.test(email) === false || patternNumber.test(phone) === false || patternNomPrenomEntreprise.test(prenom) === false || patternEmail.test(email) === false || patternUrl.test(patternUrl) === false){
     return
   }
 
@@ -344,11 +349,9 @@ form.addEventListener('submit', (e) => {
       inputs[1].nextElementSibling.classList.add("hidden")
         inputs[2].nextElementSibling.classList.add("hidden")
     }
-    let experiece={
-      entreprise:entreprise,
-      from:de,
-      to:a
-    }
+
+    let experiece={entreprise:entreprise,from:de,to:a}
+
     experiences.push(experiece);
   });
 
@@ -369,7 +372,6 @@ form.addEventListener('submit', (e) => {
 });
 function ouvrirModelDetails(worker) {
     document.getElementById("modalDetailsEmploye").classList.remove("hidden");
-
     document.getElementById("detailsPhoto").src = worker.photo;
     document.getElementById("detailsNom").textContent = worker.nom;
     document.getElementById("detailsPrenom").textContent = worker.prenom;
@@ -377,6 +379,7 @@ function ouvrirModelDetails(worker) {
     document.getElementById("detailsEmail").textContent = worker.email;
     document.getElementById("detailsPhone").textContent = worker.phone;
     document.getElementById("detailsSallonActuel").textContent = worker.currentRoom;
+
     const expList = document.getElementById("detailsExperiences");
     expList.innerHTML = "";
 
@@ -399,7 +402,7 @@ function ouvrirModelDetails(worker) {
         expList.innerHTML = "<li>Aucune expérience renseignée.</li>";
     }
 }
-
+//fermeture de model details
 document.getElementById("btnFermerDetails").onclick =() => {
     document.getElementById("modalDetailsEmploye").classList.add("hidden");
 };
@@ -407,6 +410,7 @@ document.getElementById("btnFermerDetails2").onclick =() => {
     document.getElementById("modalDetailsEmploye").classList.add("hidden");
 };
 
+//pour filtrer
 function filterWorkers(button ,ListRole, nouvelleRoom){
   let model = document.getElementById("modalIntegrerWorker")
   let container = document.getElementById("contenairWorker")
