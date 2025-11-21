@@ -328,7 +328,7 @@ form.addEventListener('submit', (e) => {
   const photo = PhotoUser.src
   const role = document.getElementById('role').value.trim()
 
-  if(patternEmail.test(email) === false || patternNumber.test(phone) === false || patternNomPrenomEntreprise.test(prenom) === false || patternEmail.test(email) === false || patternUrl.test(patternUrl) === false){
+  if(patternEmail.test(email) === false || patternNumber.test(phone) === false || patternNomPrenomEntreprise.test(nom) === false || patternNomPrenomEntreprise.test(prenom) === false || patternUrl.test(InputPhoto.value.trim()) === false){
     return
   }
 
