@@ -4,7 +4,7 @@ Une application web innovante dédiée à la **gestion visuelle et interactive d
 
 ---
 
-## 🧩 Contexte
+## Contexte
 
 Ce projet est réalisé dans le cadre de la formation **[2023] Développeur web et web mobile**.  
 L’objectif est de concevoir une application front-end permettant :
@@ -18,7 +18,7 @@ L’objectif est de concevoir une application front-end permettant :
 
 ---
 
-## 🔍 Aperçu du projet
+## Aperçu du projet
 
 WorkSphere est une application web permettant de :
 
@@ -33,7 +33,7 @@ Une version déployée est accessible en ligne (production) :
 
 ---
 
-## 🎯 Objectifs principaux
+## Objectifs principaux
 
 1. **Gestion visuelle du personnel**  
    Représenter les employés sur un plan d’étage interactif, avec une vue claire des zones occupées et vides.
@@ -52,7 +52,7 @@ Une version déployée est accessible en ligne (production) :
 
 ---
 
-## 🧑‍💼 Fonctionnalités – Gestion des employés
+##  Fonctionnalités – Gestion des employés
 
 - **Liste des employés non assignés** : section latérale “**Unassigned Staff**”.
 - **Bouton “Add New Worker”** ouvrant une **modale d’ajout** avec les champs :
@@ -77,7 +77,7 @@ Une version déployée est accessible en ligne (production) :
 
 ---
 
-## 🗺️ Plan d’étage interactif
+## Plan d’étage interactif
 
 Le bâtiment comporte **6 zones** :
 
@@ -99,7 +99,7 @@ Le plan s’appuie sur une image du bâtiment (`plan.jpg` / `plan.jpeg`) stylis�
 
 ---
 
-## 🧠 Règles métier (règles d’accès par rôle)
+## Règles métier (règles d’accès par rôle)
 
 - **Réception →** uniquement les **Réceptionnistes**
 - **Salle des serveurs →** uniquement les **Techniciens IT**
@@ -113,7 +113,7 @@ l’application filtre automatiquement la liste des employés disponibles pour c
 
 ---
 
-## 📱 Responsive design & UX/UI
+## Responsive design & UX/UI
 
 L’interface est conçue pour être **entièrement responsive** :
 
@@ -137,7 +137,7 @@ Techniques utilisées :
 
 ---
 
-## ⭐ Bonus (fonctionnalités optionnelles prévues / possibles)
+## Bonus (fonctionnalités optionnelles prévues / possibles)
 
 Les bonus suivants peuvent être implémentés (ou le sont, selon l’avancement du projet) :
 
@@ -148,7 +148,7 @@ Les bonus suivants peuvent être implémentés (ou le sont, selon l’avancement
 
 ---
 
-## 🧱 Architecture du projet
+## Architecture du projet
 
 Organisation des fichiers (simplifiée) :
 
