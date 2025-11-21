@@ -401,6 +401,18 @@ function ouvrirModelDetails(worker) {
     } else {
         expList.innerHTML = "<li>Aucune expérience renseignée.</li>";
     }
+
+    document.getElementById("btnSupprimerDetails2").onclick =() => {
+    if(confirm("tu vouler supprimer ce worker")){
+      let data = getsWorkers();
+      let newData = data.filter(w=>w.id !== worker.id)
+      saveWorkers(newData)
+      RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+      loadUnsinedWorkers()
+      document.getElementById("modalDetailsEmploye").classList.add("hidden");
+      console.log("bien supprimer")
+    }
+};
 }
 //fermeture de model details
 document.getElementById("btnFermerDetails").onclick =() => {
@@ -409,6 +421,7 @@ document.getElementById("btnFermerDetails").onclick =() => {
 document.getElementById("btnFermerDetails2").onclick =() => {
     document.getElementById("modalDetailsEmploye").classList.add("hidden");
 };
+
 
 //pour filtrer les workers selon le room
 function filterWorkers(button ,ListRole, nouvelleRoom){
@@ -421,7 +434,7 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
         container.innerHTML = "";
         model.classList.remove("hidden")
         ListRole.forEach(role=>{
-          data.filter(w=>w.role.toLowerCase() === role.toLowerCase() && w.currentRoom === "unsigned").forEach(w=>{
+          data.filter(w=>w.role.toLowerCase() === role.toLowerCase()).forEach(w=>{
             container.appendChild(carteChangerRoom(w,nouvelleRoom))
           })
         })
