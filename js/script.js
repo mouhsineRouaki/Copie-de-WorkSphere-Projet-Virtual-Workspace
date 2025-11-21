@@ -405,11 +405,12 @@ function ouvrirModelDetails(worker) {
     document.getElementById("btnSupprimerDetails2").onclick =() => {
     if(confirm("tu vouler supprimer ce worker")){
       let data = getsWorkers();
-      data.filter(w=>w.id !== worker.id)
-      saveWorkers(data)
+      let newData = data.filter(w=>w.id !== worker.id)
+      saveWorkers(newData)
       RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
       loadUnsinedWorkers()
       document.getElementById("modalDetailsEmploye").classList.add("hidden");
+      console.log("bien supprimer")
     }
 };
 }
