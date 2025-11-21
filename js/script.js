@@ -401,6 +401,17 @@ function ouvrirModelDetails(worker) {
     } else {
         expList.innerHTML = "<li>Aucune expérience renseignée.</li>";
     }
+
+    document.getElementById("btnSupprimerDetails2").onclick =() => {
+    if(confirm("tu vouler supprimer ce worker")){
+      let data = getsWorkers();
+      data.filter(w=>w.id !== worker.id)
+      saveWorkers(data)
+      RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+      loadUnsinedWorkers()
+      document.getElementById("modalDetailsEmploye").classList.add("hidden");
+    }
+};
 }
 //fermeture de model details
 document.getElementById("btnFermerDetails").onclick =() => {
@@ -409,6 +420,7 @@ document.getElementById("btnFermerDetails").onclick =() => {
 document.getElementById("btnFermerDetails2").onclick =() => {
     document.getElementById("modalDetailsEmploye").classList.add("hidden");
 };
+
 
 //pour filtrer les workers selon le room
 function filterWorkers(button ,ListRole, nouvelleRoom){
