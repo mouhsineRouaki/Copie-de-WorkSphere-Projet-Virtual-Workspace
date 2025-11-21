@@ -421,7 +421,7 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
         container.innerHTML = "";
         model.classList.remove("hidden")
         ListRole.forEach(role=>{
-          data.filter(w=>w.role.toLowerCase() === role.toLowerCase() && w.currentRoom === "unsigned").forEach(w=>{
+          data.filter(w=>w.role.toLowerCase() === role.toLowerCase()).forEach(w=>{
             container.appendChild(carteChangerRoom(w,nouvelleRoom))
           })
         })
