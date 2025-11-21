@@ -134,7 +134,8 @@ function fermerModal() {
   modal.classList.add('hidden');
   modal.classList.remove('flex');
   form.reset();
-  conteneurExperiences.innerHTML = '';
+  conteneurExperiences.innerHTML = ''
+  PhotoUser.src = "./assets/userIcon.webp";
 }
 
 //des listener pour ouvrir et fermer model dajout 
