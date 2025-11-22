@@ -1,7 +1,9 @@
 const STORAGE_KEY = 'workers';
 const LIMIT_ROOM = 5;
+const LIST_ZONES = ["conference","staffRoom","reception","serveurs","securite","archives"];
 
 let ROLE = "tous";
+
 
 
 const patternEmail = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-z]{2,}/;
@@ -38,7 +40,7 @@ btnReset.addEventListener("click",()=>{
     worker.currentRoom = "unsigned"
   })
   saveWorkers(data)
-  RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+  RemplirRoom(LIST_ZONES)
   loadUnsinedWorkers()
 })
 
@@ -196,7 +198,7 @@ btnAjouterExperience.addEventListener('click', () => {
 //creation un carte pour les info (unsined worker)
 function carteWorkerInfo(e) {
   let article = document.createElement("article")
-  article.setAttribute("class","flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
+  article.setAttribute("class","carteUnsigned flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
   article.innerHTML = `
       <img src="${e.photo}" alt="Photo de ${e.prenom} ${e.nom}" class="h-10 w-10 rounded-full object-cover">
       <div class="min-w-0">
@@ -223,11 +225,11 @@ function carteChangerRoom(e,nouvelleRoom) {
       </div>
   `;
   article.addEventListener('click',()=>{
-    if(document.getElementById(nouvelleRoom).children.length <= LIMIT_ROOM){
+    if(document.getElementById(nouvelleRoom).children.length < LIMIT_ROOM){
       let data = getsWorkers();
       data.find(w=>w.id == e.id).currentRoom = nouvelleRoom
       saveWorkers(data)
-      RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+      RemplirRoom(LIST_ZONES)
       loadUnsinedWorkers()
       article.remove()
     }else{
@@ -244,7 +246,7 @@ function carteRounded(e) {
   const article = document.createElement("article");
   const btnDelete = document.createElement("button");
 
-  article.className = `relative flex items-center bg-white shadow-md rounded-xl lg:px-2 lg:py-1 cursor-pointer transition hover:shadow-lg w-fit min-w-[7px] sm:min-w-[7px] lg:min-w-[120px]`;
+  article.className = `carteZone relative flex items-center bg-white shadow-md rounded-xl lg:px-2 lg:py-1 cursor-pointer transition hover:shadow-lg w-fit min-w-[7px] sm:min-w-[7px] lg:min-w-[120px]`;
 
   btnDelete.className = ` absolute -top-1.5 -right-1.5 bg-red-500 text-white  w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 flex items-center justify-center  rounded-full  text-[6px] sm:text-[8px] lg:text-[10px] font-bold  hover:bg-red-600 transition`;
   btnDelete.textContent = "X";
@@ -262,7 +264,7 @@ function carteRounded(e) {
     let data = getsWorkers()
     data.find(w=>w.id ===e.id ).currentRoom = "unsigned"
     saveWorkers(data)
-    RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+    RemplirRoom(LIST_ZONES)
     loadUnsinedWorkers()
     article.remove()
   })
@@ -408,10 +410,9 @@ function ouvrirModelDetails(worker) {
       let data = getsWorkers();
       let newData = data.filter(w=>w.id !== worker.id)
       saveWorkers(newData)
-      RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+      RemplirRoom(LIST_ZONES)
       loadUnsinedWorkers()
       document.getElementById("modalDetailsEmploye").classList.add("hidden");
-      console.log("bien supprimer")
     }
 };
 }
@@ -435,7 +436,7 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
         container.innerHTML = "";
         model.classList.remove("hidden")
         ListRole.forEach(role=>{
-          data.filter(w=>w.role.toLowerCase() === role.toLowerCase()).forEach(w=>{
+          data.filter(w=>w.role.toLowerCase() === role.toLowerCase() && w.currentRoom.toLowerCase() !== nouvelleRoom .toLowerCase()).forEach(w=>{
             container.appendChild(carteChangerRoom(w,nouvelleRoom))
           })
         })
@@ -494,6 +495,6 @@ filterWorkers(document.getElementById("btn-zone-securite"),["Manager","securite"
 filterWorkers(document.getElementById("btn-zone-archives"),["Manager"],"archives")
 filterWorkers(document.getElementById("btn-zone-staff-room"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"staffRoom")
 
-RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+RemplirRoom(LIST_ZONES)
 
 loadUnsinedWorkers();
