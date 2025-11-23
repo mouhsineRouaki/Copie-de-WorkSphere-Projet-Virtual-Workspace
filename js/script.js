@@ -1,6 +1,14 @@
 const STORAGE_KEY = 'workers';
 const LIMIT_ROOM = 5;
 const LIST_ZONES = ["conference","staffRoom","reception","serveurs","securite","archives"];
+const Zones = {
+  conference:["receptionniste","it","securite","Manager","Nettoyage","autre"],
+  reception:["receptionniste","Manager","Nettoyage"],
+  serveurs:["it","Manager","Nettoyage"],
+  securite:["Manager","securite","Nettoyage"],
+  archives:["Manager"],
+  staffRoom:["receptionniste","it","securite","Manager","Nettoyage","autre"]
+}
 
 let ROLE = "tous";
 
@@ -236,6 +244,10 @@ function carteChangerRoom(e,nouvelleRoom) {
       alert("roomest bien remplir")
       model.classList.add("hidden")
     }
+    //pour fermer model si vide 
+    if(model.querySelector("#contenairWorker").children.length === 0 ){
+      model.classList.add("hidden")
+    }
     
   })
   return article
@@ -430,12 +442,16 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
     if(document.getElementById(nouvelleRoom).children.length <= LIMIT_ROOM){
         let data = getsWorkers();
         container.innerHTML = "";
-        model.classList.remove("hidden")
         ListRole.forEach(role=>{
           data.filter(w=>w.role.toLowerCase() === role.toLowerCase() && w.currentRoom.toLowerCase() !== nouvelleRoom .toLowerCase()).forEach(w=>{
             container.appendChild(carteChangerRoom(w,nouvelleRoom))
           })
         })
+        if(model.querySelector("#contenairWorker").children.length === 0 ){
+          alert("aucun jour our lajout dans cette zone")
+        }else{
+          model.classList.remove("hidden")
+        }
     }else{
       alert("room et complete")
     }
@@ -484,12 +500,12 @@ function Filtre(){
 Filtre()
 
 
-filterWorkers(document.getElementById("btn-zone-conference"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"conference")
-filterWorkers(document.getElementById("btn-zone-reception"),["receptionniste","Manager","Nettoyage"],"reception")
-filterWorkers(document.getElementById("btn-zone-serveurs"),["it","Manager","Nettoyage"],"serveurs",)
-filterWorkers(document.getElementById("btn-zone-securite"),["Manager","securite","Nettoyage"],"securite")
-filterWorkers(document.getElementById("btn-zone-archives"),["Manager"],"archives")
-filterWorkers(document.getElementById("btn-zone-staff-room"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"staffRoom")
+filterWorkers(document.getElementById("btn-zone-conference"),Zones.conference,"conference")
+filterWorkers(document.getElementById("btn-zone-reception"),Zones.reception,"reception")
+filterWorkers(document.getElementById("btn-zone-serveurs"),Zones.serveurs,"serveurs",)
+filterWorkers(document.getElementById("btn-zone-securite"),Zones.securite,"securite")
+filterWorkers(document.getElementById("btn-zone-archives"),Zones.archives,"archives")
+filterWorkers(document.getElementById("btn-zone-staff-room"),Zones.archives,"staffRoom")
 
 RemplirRoom(LIST_ZONES)
 
