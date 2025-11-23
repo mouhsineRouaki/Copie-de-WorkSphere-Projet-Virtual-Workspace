@@ -1,7 +1,17 @@
 const STORAGE_KEY = 'workers';
 const LIMIT_ROOM = 5;
+const LIST_ZONES = ["conference","staffRoom","reception","serveurs","securite","archives"];
+const Zones = {
+  conference:["receptionniste","it","securite","Manager","Nettoyage","autre"],
+  reception:["receptionniste","Manager","Nettoyage"],
+  serveurs:["it","Manager","Nettoyage"],
+  securite:["Manager","securite","Nettoyage"],
+  archives:["Manager"],
+  staffRoom:["receptionniste","it","securite","Manager","Nettoyage","autre"]
+}
 
 let ROLE = "tous";
+
 
 
 const patternEmail = /[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-z]{2,}/;
@@ -38,7 +48,7 @@ btnReset.addEventListener("click",()=>{
     worker.currentRoom = "unsigned"
   })
   saveWorkers(data)
-  RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+  RemplirRoom(LIST_ZONES)
   loadUnsinedWorkers()
 })
 
@@ -196,7 +206,7 @@ btnAjouterExperience.addEventListener('click', () => {
 //creation un carte pour les info (unsined worker)
 function carteWorkerInfo(e) {
   let article = document.createElement("article")
-  article.setAttribute("class","flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
+  article.setAttribute("class","carteUnsigned flex items-center gap-3 p-2 rounded border border-slate-800 bg-slate-900 cursor-pointer")
   article.innerHTML = `
       <img src="${e.photo}" alt="Photo de ${e.prenom} ${e.nom}" class="h-10 w-10 rounded-full object-cover">
       <div class="min-w-0">
@@ -223,15 +233,19 @@ function carteChangerRoom(e,nouvelleRoom) {
       </div>
   `;
   article.addEventListener('click',()=>{
-    if(document.getElementById(nouvelleRoom).children.length <= LIMIT_ROOM){
+    if(document.getElementById(nouvelleRoom).children.length < LIMIT_ROOM){
       let data = getsWorkers();
       data.find(w=>w.id == e.id).currentRoom = nouvelleRoom
       saveWorkers(data)
-      RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+      RemplirRoom(LIST_ZONES)
       loadUnsinedWorkers()
       article.remove()
     }else{
       alert("roomest bien remplir")
+      model.classList.add("hidden")
+    }
+    //pour fermer model si vide 
+    if(model.querySelector("#contenairWorker").children.length === 0 ){
       model.classList.add("hidden")
     }
     
@@ -244,7 +258,7 @@ function carteRounded(e) {
   const article = document.createElement("article");
   const btnDelete = document.createElement("button");
 
-  article.className = `relative flex items-center bg-white shadow-md rounded-xl lg:px-2 lg:py-1 cursor-pointer transition hover:shadow-lg w-fit min-w-[7px] sm:min-w-[7px] lg:min-w-[120px]`;
+  article.className = `carteZone relative flex items-center bg-white shadow-md rounded-xl lg:px-2 lg:py-1 cursor-pointer transition hover:shadow-lg w-fit min-w-[7px] sm:min-w-[7px] lg:min-w-[120px]`;
 
   btnDelete.className = ` absolute -top-1.5 -right-1.5 bg-red-500 text-white  w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 flex items-center justify-center  rounded-full  text-[6px] sm:text-[8px] lg:text-[10px] font-bold  hover:bg-red-600 transition`;
   btnDelete.textContent = "X";
@@ -262,7 +276,7 @@ function carteRounded(e) {
     let data = getsWorkers()
     data.find(w=>w.id ===e.id ).currentRoom = "unsigned"
     saveWorkers(data)
-    RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+    RemplirRoom(LIST_ZONES)
     loadUnsinedWorkers()
     article.remove()
   })
@@ -305,14 +319,10 @@ function loadUnsinedWorkers(search = "") {
               let card = carteWorkerInfo(workers);
               listeEmployes.append(card)
             }
-            
           })
       }
-      
     }
-  }
-  
-  
+  } 
 }
 
 
@@ -329,9 +339,32 @@ form.addEventListener('submit', (e) => {
   const photo = PhotoUser.src
   const role = document.getElementById('role').value.trim()
 
-  if(patternEmail.test(email) === false || patternNumber.test(phone) === false || patternNomPrenomEntreprise.test(nom) === false || patternNomPrenomEntreprise.test(prenom) === false || patternUrl.test(InputPhoto.value.trim()) === false){
+  if(email === ""  && phone === ""  && nom === ""  && prenom === "" && InputPhoto.value.trim() === ""){
+    alert("tu va remplir tous champs ")
     return
   }
+  if(patternNomPrenomEntreprise.test(nom) === false){
+    document.getElementById('nom').nextElementSibling.classList.remove("hidden")
+    return
+  }
+    if(patternNomPrenomEntreprise.test(prenom) === false){
+    document.getElementById('prenom').nextElementSibling.classList.remove("hidden")
+    return
+  }
+  if(patternUrl.test(InputPhoto.value.trim()) === false){
+    document.getElementById('photo').nextElementSibling.classList.remove("hidden")
+    return
+  }
+  if(patternEmail.test(email) === false){
+    document.getElementById('email').nextElementSibling.classList.remove("hidden")
+    return
+  }
+  if(patternNumber.test(phone) === false){
+    document.getElementById('phone').nextElementSibling.classList.remove("hidden")
+    return
+  }
+  
+  
 
   // recuperation des experiece
   const experiences = [];
@@ -349,6 +382,11 @@ form.addEventListener('submit', (e) => {
     }else{
       inputs[1].nextElementSibling.classList.add("hidden")
         inputs[2].nextElementSibling.classList.add("hidden")
+    }
+
+    if(entreprise === "" || de=== "" ||a === ""  ){
+      alert("vous dever remplir tou les champs dexperience")
+      formValid = false
     }
 
     let experiece={entreprise:entreprise,from:de,to:a}
@@ -408,10 +446,9 @@ function ouvrirModelDetails(worker) {
       let data = getsWorkers();
       let newData = data.filter(w=>w.id !== worker.id)
       saveWorkers(newData)
-      RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+      RemplirRoom(LIST_ZONES)
       loadUnsinedWorkers()
       document.getElementById("modalDetailsEmploye").classList.add("hidden");
-      console.log("bien supprimer")
     }
 };
 }
@@ -433,12 +470,16 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
     if(document.getElementById(nouvelleRoom).children.length <= LIMIT_ROOM){
         let data = getsWorkers();
         container.innerHTML = "";
-        model.classList.remove("hidden")
         ListRole.forEach(role=>{
-          data.filter(w=>w.role.toLowerCase() === role.toLowerCase()).forEach(w=>{
+          data.filter(w=>w.role.toLowerCase() === role.toLowerCase() && w.currentRoom.toLowerCase() !== nouvelleRoom .toLowerCase()).forEach(w=>{
             container.appendChild(carteChangerRoom(w,nouvelleRoom))
           })
         })
+        if(model.querySelector("#contenairWorker").children.length === 0 ){
+          alert("aucun jour our lajout dans cette zone")
+        }else{
+          model.classList.remove("hidden")
+        }
     }else{
       alert("room et complete")
     }
@@ -487,13 +528,13 @@ function Filtre(){
 Filtre()
 
 
-filterWorkers(document.getElementById("btn-zone-conference"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"conference")
-filterWorkers(document.getElementById("btn-zone-reception"),["receptionniste","Manager","Nettoyage"],"reception")
-filterWorkers(document.getElementById("btn-zone-serveurs"),["it","Manager","Nettoyage"],"serveurs",)
-filterWorkers(document.getElementById("btn-zone-securite"),["Manager","securite","Nettoyage"],"securite")
-filterWorkers(document.getElementById("btn-zone-archives"),["Manager"],"archives")
-filterWorkers(document.getElementById("btn-zone-staff-room"),["receptionniste","it","securite","Manager","Nettoyage","autre"],"staffRoom")
+filterWorkers(document.getElementById("btn-zone-conference"),Zones.conference,"conference")
+filterWorkers(document.getElementById("btn-zone-reception"),Zones.reception,"reception")
+filterWorkers(document.getElementById("btn-zone-serveurs"),Zones.serveurs,"serveurs",)
+filterWorkers(document.getElementById("btn-zone-securite"),Zones.securite,"securite")
+filterWorkers(document.getElementById("btn-zone-archives"),Zones.archives,"archives")
+filterWorkers(document.getElementById("btn-zone-staff-room"),Zones.archives,"staffRoom")
 
-RemplirRoom(["conference","staffRoom","reception","serveurs","securite","archives"])
+RemplirRoom(LIST_ZONES)
 
 loadUnsinedWorkers();

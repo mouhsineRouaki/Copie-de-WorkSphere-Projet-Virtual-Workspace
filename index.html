@@ -5,24 +5,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WorkSphere - Gestion visuelle du personnel</title>
+  <meta name="description" content="WorkSphere est une plateforme de gestion visuelle du personnel permettant d’organiser, afficher et gérer les employés dans différentes zones de travail. Ajout, recherche, filtres, détails, et placement des employés sur un plan interactif.">
+  <meta name="keywords" content="gestion du personnel, WorkSphere, plan interactif, organisation des employés, management, dashboard entreprise, gestion RH, affichage employés, salle de conférence, salle du personnel, réception, sécurité, archivage">
   <link rel="stylesheet" href="./css/output.css">
 </head>
 
 <body class="min-h-screen  bg-slate-900 text-slate-100">
   <main class="flex flex-col-reverse md:flex-row lg:flex-row">
     <aside class="w-full max-h-screen overflow-auto md:w-72 lg:w-72 bg-slate-900 border-r border-slate-800 h-auto ">
-      <div class="flex items-center justify-between px-3 py-2 border-b border-slate-800">
+      <section class="flex items-center justify-between px-3 py-2 border-b border-slate-800">
         <div>
-          <p class="text-sm font-semibold">WorkSphere</p>
+          <h1 class="text-sm font-semibold">WorkSphere</h1>
           <p class="text-xs text-slate-400">Gestion visuelle du personnel</p>
         </div>
         <img src="./assets/logoWorkspace.jpg" alt="Logo WorkSphere" class="h-10 w-10 rounded-full object-cover">
-      </div>
+      </section>
 
-      <div class="flex gap-2 p-3 border-b border-slate-800">
+      <section class="flex gap-2 p-3 border-b border-slate-800">
         <button id="btnOuvrirForm" class="lg:px-3 lg:py-2  rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">+ Ajouter</button>
         <button id="resetAllPlace" class="lg:px-3 lg:py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">Reset all place</button>
-      </div>
+      </section>
 
       <section class="p-3 border-b border-slate-800">
         <div class="relative">
@@ -30,11 +32,11 @@
         </div>
       </section>
 
-      <section aria-labelledby="filtres-titre" class="p-3 border-b border-slate-800">
+      <section class="p-3 border-b border-slate-800">
         <h2 id="filtres-titre" class="sr-only">Filtres</h2>
         <ul id="listeFiltres" class="flex flex-wrap gap-2">
           <li><button class="btn-filter px-3 py-1 rounded bg-amber-600 text-xs" data-id="tous">Tous</button></li>
-          <li><button class="btn-filter px-3 py-1 rounded bg-slate-800 text-xs " data-id="it">IT</button></li>
+          <li><button class="btn-filter px-3 py-1 rounded bg-slate-800 text-xs" data-id="it">IT</button></li>
           <li><button class="btn-filter px-3 py-1 rounded bg-slate-800 text-xs" data-id="securite">securite</button></li>
           <li><button class="btn-filter px-3 py-1 rounded bg-slate-800 text-xs" data-id="receptionniste">receptioniste</button></li>
           <li><button class="btn-filter px-3 py-1 rounded bg-slate-800 text-xs" data-id="manager">manager</button></li>
@@ -51,17 +53,17 @@
 
     <section id="rooms" class=" relative w-full">
       <img src="./assets/plan.jpg" alt="plan d'etrage" class="w-full max-h-screen h-[500px] lg:h-screen md:h-screen block">
-      <div class="absolute top-0 left-0 w-full h-full md:h-screen  grid grid-cols-[38%_17%_22%_22%]  grid-rows-[33.5%_32%_32.5%] ">
+      <div class="container-card-unsigned absolute top-0 left-0 w-full h-full md:h-screen  grid grid-cols-[38%_17%_22%_22%]  grid-rows-[33.5%_32%_32.5%] ">
 
         <article id="zone-conference" class="col-start-1 row-start-1 justify-center rounded border border-transparent bg-blue-500/20 hover:border-blue-700 hover:bg-blue-500/40">
           <div class="flex flex-col justify-center mt-2 w-full">
             <button id="btn-zone-conference" type="button" class="lg:px-3 lg:py-1.5 lg:flex md:rounded lg:rounded rounded-full bg-amber-500 text-slate-950 text-xs hover:bg-amber-600 w-auto">
               + <span class="w-10 hidden lg:block">Ajouter</span>
             </button>
-            <h3 class="text-xs font-semibold text-center">Salle de conférence</h3>
+            <h2 class="text-xs font-semibold text-center">Salle de conférence</h2>
           </div>
           <div id="conference"
-            class="grid lg:grid-cols-3 md:grid-cols-3 gap-2  grid-cols-3 justify-around mt-2 ml-1 text-xs text-slate-300">
+            class="grid lg:grid-cols-3 md:grid-cols-3 gap-2  grid-cols-3 justify-around mt-2 ml-1 text-xs text-slate-300 zone">
           </div>
         </article>
 
@@ -70,10 +72,10 @@
             <button id="btn-zone-reception" type="button" class="lg:px-3 lg:py-1.5 lg:flex md:rounded lg:rounded rounded-full bg-amber-500 text-slate-950 text-xs hover:bg-amber-600 w-auto">
               + <span class="w-10 hidden lg:block">Ajouter</span>
             </button>
-            <h3 class="text-xs font-semibold text-center">Salon du réception</h3>
+            <h2 class="text-xs font-semibold text-center">Salon du réception</h2>
           </div>
           <div id="reception"
-            class="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-3 justify-between mt-3 text-xs text-slate-300">
+            class="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-3 justify-between mt-3 text-xs text-slate-300 zone">
           </div>
         </article>
 
@@ -82,10 +84,10 @@
             <button id="btn-zone-staff-room" type="button" class="lg:px-3 lg:py-1.5 lg:flex md:rounded lg:rounded rounded-full bg-amber-500 text-slate-950 text-xs hover:bg-amber-600 w-auto">
               + <span class="w-10 hidden lg:block">Ajouter</span>
             </button>
-            <h3 class="text-xs font-semibold text-center">Salle du personnel</h3>
+            <h2 class="text-xs font-semibold text-center">Salle du personnel</h2>
           </div>
           <div id="staffRoom"
-            class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 justify-between mt-3 text-xs text-slate-300">
+            class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 justify-between mt-3 text-xs text-slate-300 zone">
           </div>
         </article>
 
@@ -94,10 +96,10 @@
             <button id="btn-zone-serveurs" type="button" class="lg:px-3 lg:py-1.5 lg:flex md:rounded lg:rounded rounded-full bg-amber-500 text-slate-950 text-xs hover:bg-amber-600 w-auto">
               + <span class="w-10 hidden lg:block">Ajouter</span>
             </button>
-            <h3 class="text-xs font-semibold text-center">Salle des serveurs</h3>
+            <h2 class="text-xs font-semibold text-center">Salle des serveurs</h2>
           </div>
           <div id="serveurs"
-            class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 justify-center mt-3 text-xs text-slate-300">
+            class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 justify-center mt-3 text-xs text-slate-300 zone">
           </div>
         </article>
 
@@ -107,10 +109,10 @@
               class="lg:px-3 lg:py-1.5 lg:flex md:rounded lg:rounded rounded-full bg-amber-500 text-slate-950 text-xs hover:bg-amber-600 w-auto">
               + <span class="w-10 hidden lg:block">Ajouter</span>
             </button>
-            <h3 class="text-xs font-semibold text-center">Salle de sécurité</h3>
+            <h2 class="text-xs font-semibold text-center">Salle de sécurité</h2>
           </div>
           <div id="securite"
-            class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 justify-between mt-3 text-xs text-slate-300">
+            class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 justify-between mt-3 text-xs text-slate-300 zone">
           </div>
         </article>
 
@@ -119,126 +121,125 @@
             <button id="btn-zone-archives" type="button" class="lg:px-3 lg:py-1.5 lg:flex md:rounded lg:rounded rounded-full bg-amber-500 text-slate-950 text-xs hover:bg-amber-600 w-auto">
               + <span class="w-10 hidden lg:block">Ajouter</span>
             </button>
-            <h3 class="text-xs font-semibold text-center">Salle des archives</h3>
+            <h2 class="text-xs font-semibold text-center">Salle des archives</h2>
           </div>
           <div id="archives"
-            class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 gap-1 justify-between mt-3 text-xs text-slate-300">
+            class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 gap-1 justify-between mt-3 text-xs text-slate-300 zone">
           </div>
         </article>
       </div>
     </section>
-  </main>
 
-  <section id="modalEmploye" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
-    <form id="formEmploye" class="w-full min-h-[80%] max-h-[90%] overflow-auto max-w-3xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
-      <header class="flex items-center justify-between">
-        <h2 id="titreForm" class="text-lg font-semibold">Ajouter un employé</h2>
-        <button type="button" id="btnFermerForm" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
-      </header>
-      <img src="./assets/userIcon.webp" id="imageUser" alt="img" class="w-30 h-30 lg:w-72 lg:h-72 md:w-30 md:h-30 rounded-full mx-auto mb-1">
+    <section id="modalEmploye" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
+      <form id="formEmploye" class="w-full min-h-[80%] max-h-[90%] overflow-auto max-w-3xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
+        <header class="flex items-center justify-between">
+          <h2 id="titreForm" class="text-lg font-semibold">Ajouter un employé</h2>
+          <button type="button" id="btnFermerForm" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
+        </header>
+        <img src="./assets/userIcon.webp" id="imageUser" alt="Photo employé" class="w-30 h-30 lg:w-72 lg:h-72 md:w-30 md:h-30 rounded-full mx-auto mb-1">
 
-      <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label for="nom" class="block text-xs text-slate-300 mb-1">Nom</label>
-          <input id="nom" type="text" placeholder="Ex : Rouaki" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
-          <div class="erreurNom hidden  text-[15px] text-red-600">le nom de telephone doit etre valid</div>
-        </div>
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="nom" class="block text-xs text-slate-300 mb-1">Nom</label>
+            <input id="nom" type="text" placeholder="Ex : Rouaki" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+            <div class="erreurNom hidden  text-[15px] text-red-600">Le nom doit être valide</div>
+          </div>
 
-        <div>
-          <label for="prenom" class="block text-xs text-slate-300 mb-1">Prénom</label>
-          <input id="prenom" type="text" placeholder="Ex : Mouhsine" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
-          <div class="erreurPrenom hidden  text-[15px] text-red-600">le prenom  doit etre valid</div>
-        </div>
+          <div>
+            <label for="prenom" class="block text-xs text-slate-300 mb-1">Prénom</label>
+            <input id="prenom" type="text" placeholder="Ex : Mouhsine" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+            <div class="erreurPrenom hidden  text-[15px] text-red-600">le prenom  doit etre valid</div>
+          </div>
 
-        <div>
-          <label for="photo" class="block text-xs text-slate-300 mb-1">Photo (URL)</label>
-          <input id="photo" type="url" placeholder="https://exemple.com/photo.jpg" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
-          <div class="erreurUrl hidden  text-[15px] text-red-600">url doit etre valid</div>
-        </div>
+          <div>
+            <label for="photo" class="block text-xs text-slate-300 mb-1">Photo (URL)</label>
+            <input id="photo" type="url" placeholder="https://exemple.com/photo.jpg" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+            <div class="erreurUrl hidden  text-[15px] text-red-600">url doit etre valid</div>
+          </div>
 
-        <div>
-          <label for="role" class="block text-xs text-slate-300 mb-1">Rôle</label>
-          <select id="role" type="text" placeholder="Ex : Développeur Front-End" class="w-full px-3 py-2 border rounded  text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
-      
-          </select>
-        </div>
+          <div>
+            <label for="role" class="block text-xs text-slate-300 mb-1">Rôle</label>
+            <select id="role" placeholder="Ex : Développeur Front-End" class="w-full px-3 py-2 border rounded  text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+        
+            </select>
+          </div>
 
-        <div>
-          <label for="email" class="block text-xs text-slate-300 mb-1">Email</label>
-          <input id="email" type="text" placeholder="exemple@entreprise.com" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
-          <div class="erreurEmail hidden  text-[15px] text-red-600">email doit etre valid</div>
-        </div>
+          <div>
+            <label for="email" class="block text-xs text-slate-300 mb-1">Email</label>
+            <input id="email" type="text" placeholder="exemple@entreprise.com" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+            <div class="erreurEmail hidden  text-[15px] text-red-600">email doit etre valid</div>
+          </div>
 
-        <div class="md:col-span-1">
-          <label for="phone" class="block text-xs text-slate-300 mb-1">Téléphone</label>
-          <input id="phone" type="tel" placeholder="+212 6 12 34 56 78" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
-          <div class="erreurPhone hidden  text-[15px] text-red-600">le numero de telephone doit etre valid</div>
-        </div>
-      </section>
+          <div class="md:col-span-1">
+            <label for="phone" class="block text-xs text-slate-300 mb-1">Téléphone</label>
+            <input id="phone" type="tel" placeholder="+212 6 12 34 56 78" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+            <div class="erreurPhone hidden  text-[15px] text-red-600">le numero de telephone doit etre valid</div>
+          </div>
+        </section>
 
 
-      <section class="space-y-3">
+        <section class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-semibold">Expériences professionnelles</h3>
+          </div>
+          <p class="text-xs text-slate-400">Ajoute une ou plusieurs expériences (entreprise, période).</p>
+          <div id="conteneurExperiences" class="space-y-3"></div>
+          <button type="button" id="btnAjouterExperience" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">+ Ajouter une expérience</button>
+        </section>
+
+        <footer class="flex justify-end gap-2 pt-4 border-t border-slate-800">
+          <button type="button" id="btnAnnuler" class="px-4 py-2 rounded border border-slate-700 text-sm hover:bg-slate-800">Annuler</button>
+          <button type="submit" class="px-5 py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">Enregistrer</button>
+        </footer>
+      </form>
+    </section>
+
+    <section id="modalDetailsEmploye" class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-60 w-[90%] md:w-[90%] min-h-[80%] max-h-[90%] overflow-auto lg-w-[60%] flex hidden items-center justify-center bg-transparent">
+      <div class="w-full max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
         <div class="flex items-center justify-between">
-          <h3 class="text-sm font-semibold">Expériences professionnelles</h3>
+          <h2 class="text-lg font-semibold">Détails de l'employé</h2>
+          <button type="button" id="btnFermerDetails" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
         </div>
-        <p class="text-xs text-slate-400">Ajoute une ou plusieurs expériences (entreprise, période).</p>
-        <div id="conteneurExperiences" class="space-y-3"></div>
-        <button type="button" id="btnAjouterExperience" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">+ Ajouter une expérience</button>
-      </section>
 
-      <footer class="flex justify-end gap-2 pt-4 border-t border-slate-800">
-        <button type="button" id="btnAnnuler" class="px-4 py-2 rounded border border-slate-700 text-sm hover:bg-slate-800">Annuler</button>
-        <button type="submit" class="px-5 py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">Enregistrer</button>
-      </footer>
-    </form>
-  </section>
+        <div class="flex gap-4">
+          <img id="detailsPhoto" src="/assets/userIcon.webp" alt="Photo employé" class="h-24 w-24 rounded-full object-cover border border-slate-700">
 
-  <section id="modalDetailsEmploye" class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-60 w-[90%] md:[90%] min-h-[80%] max-h-[90%] overflow-auto lg-w-[60%] flex hidden items-center justify-center bg-transparent">
-    <div class="w-full max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg font-semibold">Détails de l employé</h2>
-        <button type="button" id="btnFermerDetails" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
-      </div>
-
-      <div class="flex gap-4">
-        <img id="detailsPhoto" src="/assets/userIcon.webp" alt="Photo employé" class="h-24 w-24 rounded-full object-cover border border-slate-700">
-
-        <div class="flex flex-col gap-1">
-          <p><span class="font-semibold">Nom :</span> <span id="detailsNom">-</span></p>
-          <p><span class="font-semibold">Prénom :</span> <span id="detailsPrenom">-</span></p>
-          <p><span class="font-semibold">Rôle :</span> <span id="detailsRole">-</span></p>
-          <p><span class="font-semibold">Email :</span> <span id="detailsEmail">-</span></p>
-          <p><span class="font-semibold">Téléphone :</span> <span id="detailsPhone">-</span></p>
-          <p><span class="font-semibold">Salon Actuel :</span> <span id="detailsSallonActuel">-</span></p>
+          <div class="flex flex-col gap-1">
+            <p><span class="font-semibold">Nom :</span> <span id="detailsNom">-</span></p>
+            <p><span class="font-semibold">Prénom :</span> <span id="detailsPrenom">-</span></p>
+            <p><span class="font-semibold">Rôle :</span> <span id="detailsRole">-</span></p>
+            <p><span class="font-semibold">Email :</span> <span id="detailsEmail">-</span></p>
+            <p><span class="font-semibold">Téléphone :</span> <span id="detailsPhone">-</span></p>
+            <p><span class="font-semibold">Salon Actuel :</span> <span id="detailsSallonActuel">-</span></p>
+          </div>
         </div>
+
+        <div>
+          <h3 class="text-md font-semibold mb-2">Expériences professionnelles</h3>
+          <ul id="detailsExperiences" class="space-y-2 text-sm text-slate-300">
+            <!-- rempli dynamiquement -->
+          </ul>
+        </div>
+
+        <div class="flex justify-end gap-1">
+          <button id="btnSupprimerDetails2" class="px-4 py-2 rounded bg-red-500 text-slate-900 hover:bg-red-600">supprimer</button>
+          <button id="btnFermerDetails2" class="px-4 py-2 rounded bg-amber-500 text-slate-900 hover:bg-amber-600">Fermer</button>
+        </div>
+
       </div>
+    </section>
+    <section id="modalIntegrerWorker" class="fixed top-1/2 left-1/2 w-100 -translate-y-1/2 -translate-x-1/2  hidden  items-center justify-center">
+      <div class="w-full  max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6 ">
 
-      <div>
-        <h3 class="text-md font-semibold mb-2">Expériences professionnelles</h3>
-        <ul id="detailsExperiences" class="space-y-2 text-sm text-slate-300">
-          <!-- rempli dynamiquement -->
-        </ul>
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-semibold">all wokrkers</h2>
+          <button type="button" id="btnFermerAllWorkers" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
+        </div>
+
+        <div id="contenairWorker" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2"></div>
       </div>
-
-      <div class="flex justify-end gap-1">
-        <button id="btnSupprimerDetails2" class="px-4 py-2 rounded bg-red-500 text-slate-900 hover:bg-red-600">supprimer</button>
-        <button id="btnFermerDetails2" class="px-4 py-2 rounded bg-amber-500 text-slate-900 hover:bg-amber-600">Fermer</button>
-      </div>
-
-    </div>
-  </section>
-  <section id="modalIntegrerWorker" class="fixed top-1/2 left-1/2 w-100 -translate-y-1/2 -translate-x-1/2  hidden  items-center justify-center">
-    <div class="w-full  max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6 ">
-
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg font-semibold">all wokrkers</h2>
-        <button type="button" id="btnFermerAllWorkers" class="text-slate-300 hover:text-slate-100 text-lg">✕</button>
-      </div>
-
-      <div id="contenairWorker" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2"></div>
-    </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
 
   <script src="./js/script.js"></script>
