@@ -467,7 +467,7 @@ function filterWorkers(button ,ListRole, nouvelleRoom){
   let container = document.getElementById("contenairWorker")
   
   button.addEventListener("click", ()=>{
-    if(document.getElementById(nouvelleRoom).children.length <= LIMIT_ROOM){
+    if(document.getElementById(nouvelleRoom).children.length < LIMIT_ROOM){
         let data = getsWorkers();
         container.innerHTML = "";
         ListRole.forEach(role=>{
