@@ -339,9 +339,32 @@ form.addEventListener('submit', (e) => {
   const photo = PhotoUser.src
   const role = document.getElementById('role').value.trim()
 
-  if(patternEmail.test(email) === false || patternNumber.test(phone) === false || patternNomPrenomEntreprise.test(nom) === false || patternNomPrenomEntreprise.test(prenom) === false || patternUrl.test(InputPhoto.value.trim()) === false){
+  if(email === ""  && phone === ""  && nom === ""  && prenom === "" && InputPhoto.value.trim() === ""){
+    alert("tu va remplir tous champs ")
     return
   }
+  if(patternNomPrenomEntreprise.test(nom) === false){
+    document.getElementById('nom').nextElementSibling.classList.remove("hidden")
+    return
+  }
+    if(patternNomPrenomEntreprise.test(prenom) === false){
+    document.getElementById('prenom').nextElementSibling.classList.remove("hidden")
+    return
+  }
+  if(patternUrl.test(InputPhoto.value.trim()) === false){
+    document.getElementById('photo').nextElementSibling.classList.remove("hidden")
+    return
+  }
+  if(patternEmail.test(email) === false){
+    document.getElementById('email').nextElementSibling.classList.remove("hidden")
+    return
+  }
+  if(patternNumber.test(phone) === false){
+    document.getElementById('phone').nextElementSibling.classList.remove("hidden")
+    return
+  }
+  
+  
 
   // recuperation des experiece
   const experiences = [];
@@ -359,6 +382,11 @@ form.addEventListener('submit', (e) => {
     }else{
       inputs[1].nextElementSibling.classList.add("hidden")
         inputs[2].nextElementSibling.classList.add("hidden")
+    }
+
+    if(entreprise === "" || de=== "" ||a === ""  ){
+      alert("vous dever remplir tou les champs dexperience")
+      formValid = false
     }
 
     let experiece={entreprise:entreprise,from:de,to:a}
