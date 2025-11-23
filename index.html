@@ -11,11 +11,14 @@
 </head>
 
 <body class="min-h-screen  bg-slate-900 text-slate-100">
+  <header>
+    <h1 class="sr-only">Gestion visuelle du personnel</h1>
+  </header>
   <main class="flex flex-col-reverse md:flex-row lg:flex-row">
     <aside class="w-full max-h-screen overflow-auto md:w-72 lg:w-72 bg-slate-900 border-r border-slate-800 h-auto ">
       <section class="flex items-center justify-between px-3 py-2 border-b border-slate-800">
         <div>
-          <h1 class="text-sm font-semibold">WorkSphere</h1>
+          <p class="text-sm font-semibold">WorkSphere</p>
           <p class="text-xs text-slate-400">Gestion visuelle du personnel</p>
         </div>
         <img src="./assets/logoWorkspace.jpg" alt="Logo WorkSphere" class="h-10 w-10 rounded-full object-cover">
@@ -131,6 +134,7 @@
     </section>
 
     <section id="modalEmploye" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
+      <h2 class="sr-only">modal ajout employé</h2>
       <form id="formEmploye" class="w-full min-h-[80%] max-h-[90%] overflow-auto max-w-3xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
         <header class="flex items-center justify-between">
           <h2 id="titreForm" class="text-lg font-semibold">Ajouter un employé</h2>
@@ -138,7 +142,7 @@
         </header>
         <img src="./assets/userIcon.webp" id="imageUser" alt="Photo employé" class="w-30 h-30 lg:w-72 lg:h-72 md:w-30 md:h-30 rounded-full mx-auto mb-1">
 
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label for="nom" class="block text-xs text-slate-300 mb-1">Nom</label>
             <input id="nom" type="text" placeholder="Ex : Rouaki" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
@@ -159,7 +163,7 @@
 
           <div>
             <label for="role" class="block text-xs text-slate-300 mb-1">Rôle</label>
-            <select id="role" placeholder="Ex : Développeur Front-End" class="w-full px-3 py-2 border rounded  text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
+            <select id="role" class="w-full px-3 py-2 border rounded  text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
         
             </select>
           </div>
@@ -175,26 +179,27 @@
             <input id="phone" type="tel" placeholder="+212 6 12 34 56 78" class="w-full px-3 py-2 border rounded bg-transparent text-sm outline-none border-slate-700 focus:ring-2 focus:ring-amber-500">
             <div class="erreurPhone hidden  text-[15px] text-red-600">le numero de telephone doit etre valid</div>
           </div>
-        </section>
+        </div>
 
 
-        <section class="space-y-3">
+        <div class="space-y-3">
           <div class="flex items-center justify-between">
             <h3 class="text-sm font-semibold">Expériences professionnelles</h3>
           </div>
           <p class="text-xs text-slate-400">Ajoute une ou plusieurs expériences (entreprise, période).</p>
           <div id="conteneurExperiences" class="space-y-3"></div>
           <button type="button" id="btnAjouterExperience" class="px-3 py-1.5 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">+ Ajouter une expérience</button>
-        </section>
+        </div>
 
-        <footer class="flex justify-end gap-2 pt-4 border-t border-slate-800">
+        <div class="flex justify-end gap-2 pt-4 border-t border-slate-800">
           <button type="button" id="btnAnnuler" class="px-4 py-2 rounded border border-slate-700 text-sm hover:bg-slate-800">Annuler</button>
           <button type="submit" class="px-5 py-2 rounded bg-amber-500 text-slate-950 text-sm hover:bg-amber-600">Enregistrer</button>
-        </footer>
+        </div>
       </form>
     </section>
 
     <section id="modalDetailsEmploye" class="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-60 w-[90%] md:w-[90%] min-h-[80%] max-h-[90%] overflow-auto lg-w-[60%] flex hidden items-center justify-center bg-transparent">
+      <h2 class="sr-only"> modal détails de l'employé</h2>
       <div class="w-full max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6">
         <div class="flex items-center justify-between">
           <h2 class="text-lg font-semibold">Détails de l'employé</h2>
@@ -229,6 +234,7 @@
       </div>
     </section>
     <section id="modalIntegrerWorker" class="fixed top-1/2 left-1/2 w-100 -translate-y-1/2 -translate-x-1/2  hidden  items-center justify-center">
+      <h2 class="sr-only">modal ajout employé dans zone</h2>
       <div class="w-full  max-w-2xl bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-6 ">
 
         <div class="flex items-center justify-between">
