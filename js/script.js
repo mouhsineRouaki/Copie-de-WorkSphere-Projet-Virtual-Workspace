@@ -307,14 +307,10 @@ function loadUnsinedWorkers(search = "") {
               let card = carteWorkerInfo(workers);
               listeEmployes.append(card)
             }
-            
           })
       }
-      
     }
-  }
-  
-  
+  } 
 }
 
 
